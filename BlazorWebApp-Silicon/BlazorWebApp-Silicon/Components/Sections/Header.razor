@@ -1,0 +1,83 @@
+﻿<header class="header">
+    <div class="container">
+        <a id="logo" href="/">
+            <img id="logo-mode" src="/images/Silicon-Logotype-Light-Mode.svg" alt="silicon logo">
+        </a>
+
+        <div id="menu">
+            <nav>                               
+                <NavLink class="menu-link" href="#Overview">Overview</NavLink>
+                <NavLink class="menu-link" href="#Features">Features</NavLink>
+                <NavLink class="menu-link" href="/contact" >Contact</NavLink>
+
+                <AuthorizeView>
+                    <Authorized>
+                    <NavLink class="menu-link" href="#Overview">Overview</NavLink>
+                    <NavLink class="menu-link" href="#Features">Features</NavLink>
+                    <NavLink class="menu-link" href="/Courses">Courses</NavLink>
+                    <NavLink class="menu-link" href="/Contact">Contact</NavLink>
+                    <NavLink class="menu-link" href="/Admin">Admin</NavLink>
+
+                    </Authorized>
+                </AuthorizeView>   
+                
+            </nav>
+        </div>
+
+        <div class="btn-switch">
+            <label class="lightlabel">Light</label>
+            <label class="switch" for="switch-mode">
+                <input type="checkbox" id="switch-mode" checked="" />
+                <div class="slider round"></div>
+            </label>
+            <label class="darklabel">Dark</label>
+        </div>
+
+        <div class="account-buttons">
+            <AuthorizeView>
+                <Authorized>
+                    <NavLink class="btn-gray" href="/SignOut">Sign out<i class="fa-solid fa-right-to-bracket"></i></NavLink>
+                </Authorized>
+            </AuthorizeView>
+
+            <NavLink class="btn-gray" href="/Account/Login">Sign in<i class="fa-solid fa-right-to-bracket"></i></NavLink>
+            <NavLink class="btn-theme" href="/Account/Register">Sign up<i class="fa-solid fa-user-plus"></i></NavLink>
+        </div>
+
+        <AuthorizeView>
+             <Authorized>
+                <div class="profile-img">
+                    <NavLink href="/Details"><img id="" src="" alt="profile image"></NavLink>
+                </div>
+
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="mobile-menu">
+                    <nav>
+                        <NavLink class="menu-link" href="/Details">Overview</NavLink>
+                        <NavLink class="menu-link" href="/Courses">Courses</NavLink>
+                        <NavLink class="menu-link" href="/Contact">Contact</NavLink>
+                        <NavLink class="menu-link" href="/SignOut">Sign out</NavLink>
+                        <NavLink class="menu-link" href="/Admin">Admin</NavLink>                  
+                    </nav>
+                </div>
+             </Authorized>
+         </AuthorizeView>
+
+            
+        <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+        <div class="mobile-menu">
+            <nav>
+                <NavLink class="menu-link" href="#showcase">Showcase</NavLink>
+                <NavLink class="menu-link" href="#benefits">Features</NavLink>
+                <NavLink class="menu-link" href="/Contact">Contact</NavLink>
+                <NavLink class="menu-link" href="/SignIn">Sign in</NavLink>
+                <NavLink class="menu-link" href="/SignUp">Sign up</NavLink>
+            </nav>
+        </div>
+        
+    </div>
+</header>
+
+@code {
+
+}

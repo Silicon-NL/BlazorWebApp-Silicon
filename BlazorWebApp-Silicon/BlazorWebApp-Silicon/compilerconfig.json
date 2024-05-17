@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "wwwroot/app.css",
+    "inputFile": "wwwroot/app.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Header.razor.css",
+    "inputFile": "Components/Sections/Header.razor.scss"
+  }
+]
