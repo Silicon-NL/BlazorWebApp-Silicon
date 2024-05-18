@@ -42,5 +42,9 @@
   {
     "outputFile": "Components/Pages/Contact.razor.css",
     "inputFile": "Components/Pages/Contact.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/Register.razor.css",
+    "inputFile": "Components/Account/Pages/Register.razor.scss"
   }
 ]
