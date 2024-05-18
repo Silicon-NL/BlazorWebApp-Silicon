@@ -1,0 +1,114 @@
+﻿.downloadApp {
+  background-color: var(--color-gray-200);
+}
+.downloadApp .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.downloadApp .container .downloadApp-image {
+  display: none;
+}
+@media (min-width: 1200px) {
+  .downloadApp .container .downloadApp-image {
+    display: block;
+    max-width: 600px;
+    margin-right: 100px;
+  }
+}
+@media (min-width: 1400px) {
+  .downloadApp .container .downloadApp-image {
+    max-width: 800px;
+  }
+}
+.downloadApp .container .downloadApp-content {
+  margin: auto;
+  padding-top: 50px;
+  text-align: center;
+}
+@media (min-width: 1200px) {
+  .downloadApp .container .downloadApp-content {
+    text-align: left;
+  }
+}
+.downloadApp .container .downloadApp-content h1 {
+  padding-bottom: 50px;
+}
+@media (min-width: 1200px) {
+  .downloadApp .container .downloadApp-content h1 {
+    padding-right: 20%;
+  }
+}
+.downloadApp .container .downloadApp-content p {
+  margin: 0;
+}
+.downloadApp .container .downloadApp-content a {
+  margin-top: 10%;
+  margin-left: 10%;
+}
+.downloadApp .container .downloadApp-content .appstore-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+@media (min-width: 768px) {
+  .downloadApp .container .downloadApp-content .appstore-content {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1200px) {
+  .downloadApp .container .downloadApp-content .appstore-content {
+    justify-content: left;
+  }
+}
+.downloadApp .container .downloadApp-content .appstore-content a {
+  margin: auto;
+  margin-top: 20px;
+}
+.downloadApp .container .downloadApp-content .appstore-content a img {
+  box-shadow: var(--box-theme-shadow);
+}
+@media (min-width: 768px) {
+  .downloadApp .container .downloadApp-content .appstore-content a {
+    padding-top: 30px;
+    margin: 30px;
+  }
+}
+.downloadApp .container .downloadApp-content .appstore-content #appstore-darkmode {
+  display: none;
+}
+.downloadApp .container .downloadApp-content .googleplay-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+@media (min-width: 768px) {
+  .downloadApp .container .downloadApp-content .googleplay-content {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1200px) {
+  .downloadApp .container .downloadApp-content .googleplay-content {
+    justify-content: left;
+  }
+}
+.downloadApp .container .downloadApp-content .googleplay-content a {
+  margin: auto;
+  margin-top: 20px;
+}
+.downloadApp .container .downloadApp-content .googleplay-content a img {
+  box-shadow: var(--box-theme-shadow);
+}
+@media (min-width: 768px) {
+  .downloadApp .container .downloadApp-content .googleplay-content a {
+    padding-top: 30px;
+    margin: 30px;
+  }
+}
+.downloadApp .container .downloadApp-content .googleplay-content #googleplay-darkmode {
+  display: none;
+}

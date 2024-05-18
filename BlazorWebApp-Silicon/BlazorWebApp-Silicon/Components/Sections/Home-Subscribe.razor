@@ -1,0 +1,113 @@
+﻿@using System.ComponentModel.DataAnnotations
+@rendermode InteractiveServer
+
+<section class="subscribe" id="subscribe-section">
+    <div class="container">
+        <div class="section-title">
+            <h1>Don't Want to Miss Anything?</h1>
+            <img src="/images/subscribe-img.svg" alt="">
+        </div>
+        <div class="signup-content">
+            <EditForm FormName="subscribeform" Model="SubscribeForm" OnValidSubmit="OnValidSubmit" method="post" novalidate>
+                <DataAnnotationsValidator />
+                <div class="checkbox-content">
+                    <h5>Sign up for Newsletters</h5>
+                    <div class="checkbox">
+                        <div class="ch-b">
+                            <InputCheckbox @bind-Value="SubscribeForm.DailyNewsletter" />
+                            <label>DailyNewsletter</label>
+                        </div>
+                        <div class="ch-b">
+                            <InputCheckbox @bind-Value="SubscribeForm.AdvertisingUpdates" />
+                            <label>AdvertisingUpdates</label>
+                        </div>
+
+                        <div class="ch-b">
+                            <InputCheckbox @bind-Value="SubscribeForm.WeekInReview" />
+                            <label>WeekInReview</label>
+                        </div>
+
+                        <div class="ch-b">
+                            <InputCheckbox @bind-Value="SubscribeForm.EventUpdates" />
+                            <label>EventUpdates</label>
+                        </div>
+
+                        <div class="ch-b">
+                            <InputCheckbox @bind-Value="SubscribeForm.StartupsWeekly" />
+                            <label>StartupsWeekly</label>
+                        </div>
+
+                        <div class="ch-b">
+                            <InputCheckbox @bind-Value="SubscribeForm.Podcasts" />
+                            <label>Podcasts</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="signup-email">
+                    <InputText type="email" @bind-Value="SubscribeForm.Email" placeholder="Enter your email"/>    
+                    <button type="submit" class="btn-theme">Subscribe *</button>
+                </div>
+                
+                <ValidationMessage For="@(() => SubscribeForm.Email)" />
+                <p>* Yes, I agree to the<NavLink href="#">terms</NavLink>and<NavLink href="#">privacy policy</NavLink>.</p>
+                <span class="information">
+                    @if (!string.IsNullOrEmpty(ConfirmMessage))
+                    {
+                        <span class=" alert alert-success" role="alert">
+                            @ConfirmMessage
+                        </span>
+                    }
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <span class=" alert alert-danger" role="alert">
+                            @ErrorMessage
+                        </span>
+                    }
+                </span>
+            </EditForm>
+
+        </div>
+    </div>
+</section>
+
+
+@code {
+    [SupplyParameterFromQuery]
+    public string ConfirmMessage { get; set; } = "";
+    public string ErrorMessage { get; set; } = "";
+
+    [SupplyParameterFromForm]
+    public SubscribeFormModel SubscribeForm { get; set; } = new SubscribeFormModel();
+
+    private async Task OnValidSubmit()
+    {
+
+        try
+        {
+            var result = await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe", SubscribeForm);
+            if(result.IsSuccessStatusCode)
+                ConfirmMessage = "Thank you for subscribing";
+        }
+        catch 
+        {
+            ErrorMessage = "An error occured. Please try agen later"; 
+        }
+        SubscribeForm = new SubscribeFormModel();
+
+    }
+
+    public class SubscribeFormModel
+    {
+        [Required(ErrorMessage = "You must provide an email address")]
+        [EmailAddress]
+        [Display(Name = "E-mail address", Prompt = "Your Email")]
+        public string Email { get; set; } = null!;
+        public bool DailyNewsletter { get; set; }
+        public bool AdvertisingUpdates { get; set; }
+        public bool WeekInReview { get; set; }
+        public bool EventUpdates { get; set; }
+        public bool StartupsWeekly { get; set; }
+        public bool Podcasts { get; set; }
+    }
+}

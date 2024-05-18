@@ -1,0 +1,101 @@
+﻿.subscribe {
+  background-color: var(--color-gray-100);
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+.subscribe .container .section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.subscribe .container .section-title h1 {
+  text-align: center;
+}
+.subscribe .container .section-title img {
+  display: none;
+}
+@media (min-width: 768px) {
+  .subscribe .container .section-title img {
+    display: block;
+  }
+}
+.subscribe .container .signup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 30px;
+}
+@media (min-width: 768px) {
+  .subscribe .container .signup-content {
+    align-items: baseline;
+    flex-direction: row;
+    text-align: left;
+  }
+}
+.subscribe .container .signup-content form .checkbox-content {
+  display: grid;
+  grid-template-columns: auto;
+}
+@media (min-width: 768px) {
+  .subscribe .container .signup-content form .checkbox-content {
+    grid-template-columns: 200px 1fr;
+  }
+}
+.subscribe .container .signup-content form .checkbox-content .checkbox {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+@media (min-width: 768px) {
+  .subscribe .container .signup-content form .checkbox-content .checkbox {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+.subscribe .container .signup-content form .checkbox-content .checkbox .ch-b {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-bottom: 5px;
+}
+.subscribe .container .signup-content form .checkbox-content .checkbox .ch-b label {
+  margin-top: 0px;
+  padding-left: 5px;
+}
+.subscribe .container .signup-content form .signup-email {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  opacity: 80%;
+}
+@media (min-width: 768px) {
+  .subscribe .container .signup-content form .signup-email {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+.subscribe .container .signup-content form .signup-email input {
+  height: 50px;
+  width: 100%;
+  margin-right: 20px;
+}
+@media (max-width: 768px) {
+  .subscribe .container .signup-content form .signup-email input {
+    margin-right: 0px;
+  }
+}
+.subscribe .container .signup-content form .signup-email button {
+  height: 50px;
+  width: 150px;
+}
+@media (max-width: 768px) {
+  .subscribe .container .signup-content form .signup-email button {
+    width: 100%;
+  }
+}
+.subscribe .container .signup-content form span {
+  width: 100%;
+}

@@ -1,0 +1,127 @@
+﻿.contactShowcase {
+  background-color: var(--color-gray-100);
+}
+.contactShowcase .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+}
+.contactShowcase .container h1 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+@media (min-width: 992px) {
+  .contactShowcase .container {
+    align-items: start;
+  }
+}
+.contactShowcase .container .top-text {
+  margin-top: 50px;
+}
+.contactShowcase .container .top-text i {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.contactShowcase .container .top-text .active {
+  color: var(--color-theme);
+}
+.contactShowcase .container .contactUs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 992px) {
+  .contactShowcase .container .contactUs {
+    flex-direction: row;
+  }
+}
+.contactShowcase .container .contactUs .email-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 30px;
+  width: 200px;
+}
+@media (min-width: 992px) {
+  .contactShowcase .container .contactUs .email-info {
+    text-align: left;
+    flex-direction: row;
+    width: 300px;
+  }
+}
+@media (min-width: 992px) {
+  .contactShowcase .container .contactUs .email-info img {
+    flex-direction: row;
+    margin-right: 20px;
+    margin-bottom: 40px;
+  }
+}
+.contactShowcase .container .contactUs .email-info .email-info-text i {
+  margin-left: 10px;
+}
+.contactShowcase .container .contactUs .career-info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  align-items: center;
+  width: 200px;
+}
+@media (min-width: 992px) {
+  .contactShowcase .container .contactUs .career-info {
+    text-align: left;
+    flex-direction: row;
+    margin-left: 0;
+    width: 300px;
+  }
+}
+@media (min-width: 992px) {
+  .contactShowcase .container .contactUs .career-info img {
+    flex-direction: row;
+    margin-right: 20px;
+    margin-bottom: 40px;
+  }
+}
+.contactShowcase .container .contactUs .career-info .career-info-text i {
+  margin-left: 10px;
+}
+.contactShowcase .container .contactForm {
+  margin-top: 30px;
+  padding: 40px;
+  color: black;
+  background-color: white;
+  box-shadow: var(--box-shadow-l);
+  border-radius: 5px;
+}
+@media (min-width: 992px) {
+  .contactShowcase .container .contactForm {
+    position: absolute;
+    top: 150px;
+    right: 100px;
+  }
+}
+@media (min-width: 1400px) {
+  .contactShowcase .container .contactForm {
+    right: 400px;
+  }
+}
+.contactShowcase .container .contactForm form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.contactShowcase .container .contactForm form input, .contactShowcase .container .contactForm form textarea {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+.contactShowcase .container .contactForm form button {
+  margin-top: 20px;
+}
+.contactShowcase .contactMap img {
+  width: 100%;
+}

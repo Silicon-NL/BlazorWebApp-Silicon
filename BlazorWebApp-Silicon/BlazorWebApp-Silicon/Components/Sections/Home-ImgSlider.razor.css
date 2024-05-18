@@ -1,0 +1,13 @@
+﻿.img-slider {
+  display: none;
+}
+@media (min-width: 768px) {
+  .img-slider {
+    display: block;
+    justify-content: center;
+  }
+  .img-slider img {
+    max-width: 100%;
+    height: auto;
+  }
+}

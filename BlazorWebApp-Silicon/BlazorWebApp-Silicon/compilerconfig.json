@@ -6,5 +6,41 @@
   {
     "outputFile": "Components/Sections/Header.razor.css",
     "inputFile": "Components/Sections/Header.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Footer.razor.css",
+    "inputFile": "Components/Sections/Footer.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-Benefits.razor.css",
+    "inputFile": "Components/Sections/Home-Benefits.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-DownloadApp.razor.css",
+    "inputFile": "Components/Sections/Home-DownloadApp.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-ImgSlider.razor.css",
+    "inputFile": "Components/Sections/Home-ImgSlider.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-ManageWork.razor.css",
+    "inputFile": "Components/Sections/Home-ManageWork.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-Showcase.razor.css",
+    "inputFile": "Components/Sections/Home-Showcase.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-Subscribe.razor.css",
+    "inputFile": "Components/Sections/Home-Subscribe.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Home-WorkTools.razor.css",
+    "inputFile": "Components/Sections/Home-WorkTools.razor.scss"
+  },
+  {
+    "outputFile": "Components/Pages/Contact.razor.css",
+    "inputFile": "Components/Pages/Contact.razor.scss"
   }
 ]
