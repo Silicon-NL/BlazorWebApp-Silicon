@@ -85,7 +85,7 @@
 
         try
         {
-            var result = await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe", SubscribeForm);
+            var result = await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe?code=OFbaYcV1zykt05NiLzTls1lv6Tkx3oiFvkB8velll2WkAzFu0jYaew%3D%3D", SubscribeForm);
             if(result.IsSuccessStatusCode)
                 ConfirmMessage = "Thank you for subscribing";
         }
