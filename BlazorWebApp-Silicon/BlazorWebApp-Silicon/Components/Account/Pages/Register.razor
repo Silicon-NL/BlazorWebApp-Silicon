@@ -32,11 +32,11 @@
 
             <label>Password</label>
             <ValidationMessage For="() => SignUpForm.Password" />
-            <InputText @bind-Value="SignUpForm.FirstName" />
+            <InputText @bind-Value="SignUpForm.Password" />
 
             <label>Confirm Password</label>
             <ValidationMessage For="() => SignUpForm.ConfirmPassword" />
-            <InputText @bind-Value="SignUpForm.FirstName" />
+            <InputText @bind-Value="SignUpForm.Password" />
 
             <div class="signUp-checkbox">
                 <InputCheckbox @bind-Value="SignUpForm.TermsAndConditions"/>
@@ -82,7 +82,7 @@
             return;
         };
 
-        await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/verify?code=D8ZK0q3vDWpcCi_vMVi7v1kT4KA9EcKx3tUg_vrZDclEAzFuoWDFlg%3D%3D", SignUpForm);
+        await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=nwT0Yw2arWW5HPTpW-sxBbLOpOU4wEK482r5EO2LYyvuAzFupkGuGg%3D%3D", SignUpForm.EmailAddress);
         if(UserManager.Options.SignIn.RequireConfirmedAccount)
         {
             RedirectManager.RedirectTo("account/RegisterConfirmation", new() { ["email"] = SignUpForm.EmailAddress, ["returnUrl"] = ReturnUrl });

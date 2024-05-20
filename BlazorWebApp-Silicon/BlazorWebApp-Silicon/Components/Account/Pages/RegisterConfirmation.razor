@@ -10,7 +10,7 @@
     <StatusMessage Message="@statusMessage" />
         <div class="signUp-text">
             <h1>Verify you Account</h1>
-            <p>Didn't receive an email?<button @onclick="ResendCode">Resend email.</button></p>
+        <p>Didn't receive an email?<button @onclick="ResendCode">Resend email.</button></p>
         </div>
 
     <EditForm FormName="VerifyCodeModel" Model="VerifyCodeForm" OnInvalidSubmit="OnValidSubmit" asp-route-returnUrl="@ReturnUrl" method="post" novalidation>
@@ -53,7 +53,7 @@
 
     private async Task ResendCode()
     {
-        var result = await Http.PostAsJsonAsync("https://BlazorWebApp-Silicon-ServiceBus.servicebus.windows.net/verification_request", Email);
+        var result = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=nwT0Yw2arWW5HPTpW-sxBbLOpOU4wEK482r5EO2LYyvuAzFupkGuGg%3D%3D", Email);
         if (result.IsSuccessStatusCode)
         {
             statusMessage = "Code resent";
