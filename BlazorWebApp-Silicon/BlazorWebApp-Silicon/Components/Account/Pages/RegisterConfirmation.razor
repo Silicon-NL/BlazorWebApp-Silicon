@@ -27,19 +27,19 @@
 </div>
 
 @code {
-    private string? statusMessage;
+    public string? statusMessage;
 
     [CascadingParameter]
-    private HttpContext HttpContext { get; set; } = default!;
+    public HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromQuery]
-    private string? Email { get; set; }
+    public string? Email { get; set; }
 
     [SupplyParameterFromQuery]
-    private string? ReturnUrl { get; set; }
+    public string? ReturnUrl { get; set; }
 
     [SupplyParameterFromForm]
-    private VerifyCodeModel VerifyCodeForm { get; set; } = new VerifyCodeModel();
+    public VerifyCodeModel VerifyCodeForm { get; set; } = new VerifyCodeModel();
 
     public async Task OnValidSubmit()
     {
@@ -51,7 +51,7 @@
         else { statusMessage = "Invalid code"; }
     }
 
-    private async Task ResendCode()
+    public async Task ResendCode()
     {
         var result = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=nwT0Yw2arWW5HPTpW-sxBbLOpOU4wEK482r5EO2LYyvuAzFupkGuGg%3D%3D", Email);
         if (result.IsSuccessStatusCode)
