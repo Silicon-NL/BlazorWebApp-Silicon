@@ -18,6 +18,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using BlazorWebApp_Silicon.Data
+@using Microsoft.AspNetCore.Http
 @inject HttpClient Http
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -26,3 +27,4 @@
 @inject ILogger<Register> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject IHttpContextAccessor HttpContextAccessor

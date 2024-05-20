@@ -5,7 +5,7 @@
 
 <section id="signUp-section">
     <div class="container">
-        @if(!string.IsNullOrEmpty(StatusMessage))
+        @if(!string.IsNullOrEmpty(@StatusMessage))
         {
             <div class=" alert alert-danger">
                 @StatusMessage
@@ -16,7 +16,8 @@
             <p>Already have an account?<NavLink href="/account/login">Sign in here.</NavLink></p>
         </div>
 
-        <EditForm FormName="SignUpForm" Model="SignUpForm" OnInvalidSubmit="OnValidSubmit" asp-route-returnUrl="@ReturnUrl" method="post" novalidate>
+        <EditForm FormName="SignUpForm" Model="SignUpForm" OnValidSubmit="OnValidSubmit" asp-route-returnUrl="@ReturnUrl" method="post" novalidate>
+            
             <DataAnnotationsValidator />
 
             <div class="fullname">
@@ -73,7 +74,7 @@
     [SupplyParameterFromQuery]
     public string? ReturnUrl { get; set; }
 
-    public async Task OnValidSubmit(EditContext editContext)
+    private async Task OnValidSubmit(EditContext editContext)
     {
         var user = new ApplicationUser
             {
@@ -100,22 +101,26 @@
             {
                 StatusMessage = "Unable to register.";
                 return;
-            };
+            }
         }
         catch (Exception ex)
         {
-            StatusMessage = "Error occured while creating the account";
+            StatusMessage = $"Error occured while creating the account {ex.Message}";
             return;
         }
 
-        await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=nwT0Yw2arWW5HPTpW-sxBbLOpOU4wEK482r5EO2LYyvuAzFupkGuGg%3D%3D", SignUpForm.EmailAddress);
-        if(UserManager.Options.SignIn.RequireConfirmedAccount)
+        var respone = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=Nltl8nhiJiu7MmjwSObfm4clBatcm3EjG8YQh3FG7sEUAzFuHrOScA%3D%3D", new { email = SignUpForm.EmailAddress });
+        if(respone.IsSuccessStatusCode)
         {
-            RedirectManager.RedirectTo("account/RegisterConfirmation", new() { ["email"] = SignUpForm.EmailAddress, ["returnUrl"] = ReturnUrl });
+            if (UserManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                RedirectManager.RedirectTo("account/RegisterConfirmation", new() { ["email"] = user.Email, ["returnUrl"] = ReturnUrl });
+            }
+
+            await SignInManager.SignInAsync(user, isPersistent: false);
+            RedirectManager.RedirectTo(ReturnUrl);
         }
 
-        await SignInManager.SignInAsync(user, isPersistent: false);
-        RedirectManager.RedirectTo(ReturnUrl);
     }
 
     public class SignUpModel
@@ -131,19 +136,19 @@
         [Required]
         [Display(Name = "Email address", Prompt = "Enter your email address")]
         [DataType(DataType.EmailAddress)]
-        [RegularExpression("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
         public string EmailAddress { get; set; } = null!;
 
         [Required]
         [Display(Name = "Password", Prompt = "Enter your password")]
         [DataType(DataType.Password)]
-        [RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "Invalid password")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)(?!.*\s).{8,}$", ErrorMessage = "Invalid password")]
         public string Password { get; set; } = null!;
 
         [Required]
-        [Display(Name = "Confirm password", Prompt = "Confirm you password")]
+        [Display(Name = "Confirm password", Prompt = "Confirm your password")]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Invalid password confirmation")]
+        [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = null!;
 
 
