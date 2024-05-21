@@ -109,8 +109,8 @@
             return;
         }
 
-        var respone = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=Nltl8nhiJiu7MmjwSObfm4clBatcm3EjG8YQh3FG7sEUAzFuHrOScA%3D%3D", new { email = SignUpForm.EmailAddress });
-        if(respone.IsSuccessStatusCode)
+        var response = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/GenerateVerificationCodeHttp?code=nwT0Yw2arWW5HPTpW-sxBbLOpOU4wEK482r5EO2LYyvuAzFupkGuGg%3D%3D", new { Email = SignUpForm.EmailAddress });
+        if (response.IsSuccessStatusCode)
         {
             if (UserManager.Options.SignIn.RequireConfirmedAccount)
             {

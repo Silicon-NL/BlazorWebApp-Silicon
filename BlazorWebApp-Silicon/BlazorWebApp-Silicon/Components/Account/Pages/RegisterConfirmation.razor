@@ -57,7 +57,7 @@
     {
         try
         {
-            var result = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/verify?code=D8ZK0q3vDWpcCi_vMVi7v1kT4KA9EcKx3tUg_vrZDclEAzFuoWDFlg%3D%3D", new { Email = Email, Code = VerifyCodeForm.Code });
+            var result = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/verify?code=D8ZK0q3vDWpcCi_vMVi7v1kT4KA9EcKx3tUg_vrZDclEAzFuoWDFlg%3D%3D", new { Email = Email, VerificationCode = VerifyCodeForm.Code });
 
             if(result.IsSuccessStatusCode)
             {
