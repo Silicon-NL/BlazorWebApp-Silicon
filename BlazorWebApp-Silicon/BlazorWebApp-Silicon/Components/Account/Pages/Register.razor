@@ -74,7 +74,7 @@
     [SupplyParameterFromQuery]
     public string? ReturnUrl { get; set; }
 
-    private async Task OnValidSubmit(EditContext editContext)
+    public async Task OnValidSubmit(EditContext editContext)
     {
         var user = new ApplicationUser
             {

@@ -53,41 +53,34 @@
     [SupplyParameterFromForm]
     public VerifyCodeModel VerifyCodeForm { get; set; } = new VerifyCodeModel();
 
-   public async Task OnValidSubmit()
-{
-    try
+    public async Task OnValidSubmit()
     {
-        var requestBody = new { Email = Email, Code = VerifyCodeForm.Code };
-        Logger.LogInformation("Sending request to validation service with data: {RequestData}", requestBody);
-
-        var result = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/verify?code=D8ZK0q3vDWpcCi_vMVi7v1kT4KA9EcKx3tUg_vrZDclEAzFuoWDFlg%3D%3D", requestBody);
-        
-        var responseBody = await result.Content.ReadAsStringAsync();
-        Logger.LogInformation("Received response from validation service: {ResponseData}", responseBody);
-
-        if(result.IsSuccessStatusCode)
+        try
         {
+            var result = await Http.PostAsJsonAsync("https://verificationprovider-silicon-nl.azurewebsites.net/api/verify?code=D8ZK0q3vDWpcCi_vMVi7v1kT4KA9EcKx3tUg_vrZDclEAzFuoWDFlg%3D%3D", new { Email = Email, Code = VerifyCodeForm.Code });
+
+            if(result.IsSuccessStatusCode)
+            {
                 var user = await UserManager.FindByEmailAsync(Email!);
                 if (user != null)
                 {
-
                     user.EmailConfirmed = true;
                     await UserManager.UpdateAsync(user);
 
-                    RedirectManager.RedirectTo("account/login");
+                    NavigationManager.NavigateTo("account/login");
                 }
+            }
+            else 
+            { 
+                statusMessage = "Invalid code"; 
+            }
         }
-        else 
-        { 
-            statusMessage = "Invalid code"; 
+        catch(Exception ex)
+        {
+            Logger.LogError(ex, "An error occurred while sending request to validation service.");
+            statusMessage = "An error occurred while processing your request.";
         }
     }
-    catch(Exception ex)
-    {
-        Logger.LogError(ex, "An error occurred while sending request to validation service.");
-        statusMessage = "An error occurred while processing your request.";
-    }
-}
 
     public async Task ResendCode()
     {
