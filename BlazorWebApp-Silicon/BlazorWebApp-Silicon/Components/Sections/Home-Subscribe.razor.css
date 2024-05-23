@@ -27,12 +27,12 @@
   justify-content: center;
   text-align: center;
   padding-bottom: 30px;
+  width: 100%;
 }
 @media (min-width: 768px) {
   .subscribe .container .signup-content {
     align-items: baseline;
     flex-direction: row;
-    text-align: left;
   }
 }
 .subscribe .container .signup-content form .checkbox-content {
@@ -67,6 +67,8 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   margin-top: 20px;
   opacity: 80%;
@@ -74,12 +76,11 @@
 @media (min-width: 768px) {
   .subscribe .container .signup-content form .signup-email {
     flex-direction: row;
-    justify-content: center;
   }
 }
 .subscribe .container .signup-content form .signup-email input {
   height: 50px;
-  width: 100%;
+  width: 250px;
   margin-right: 20px;
 }
 @media (max-width: 768px) {

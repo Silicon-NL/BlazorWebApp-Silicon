@@ -1,0 +1,72 @@
+.signIn-section {
+    margin-top: 100px;
+    margin-bottom: 200px;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+
+        .signIn-text {
+            text-align: left;
+            width: 80%;
+
+            @media(min-width: 1200px) {
+                width: 50%;
+            }
+        }
+
+        form {
+
+
+
+            .signIn-email {
+                display: flex;
+                flex-direction: column;
+
+                label {
+                    font-weight: bold;
+                }
+            }
+
+            .signIn-password {
+
+                label {
+                    font-weight: bold;
+                }
+            }
+
+            .signIn-checkbox {
+                label {
+                    margin-left: 5px;
+                }
+            }
+
+            .forgot-signIn {
+                text-align: center;
+                margin-bottom: 20px;
+                border-bottom: 1px solid var(--color-gray-400);
+                padding-bottom: 20px;
+
+                button {
+                    width: 100%;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+        .altSignIn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+
+            button {
+                margin: 10px;
+            }
+        }
+    }
+}
