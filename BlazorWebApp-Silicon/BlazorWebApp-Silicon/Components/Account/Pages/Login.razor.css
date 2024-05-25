@@ -9,12 +9,20 @@
   align-items: center;
 }
 .signIn-section .container .signIn-text {
-  text-align: left;
+  text-align: center;
   width: 80%;
 }
 @media (min-width: 1200px) {
   .signIn-section .container .signIn-text {
     width: 50%;
+  }
+}
+.signIn-section .container form {
+  width: 50%;
+}
+@media (max-width: 768px) {
+  .signIn-section .container form {
+    width: 100%;
   }
 }
 .signIn-section .container form .signIn-email {

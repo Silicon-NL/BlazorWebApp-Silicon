@@ -35,6 +35,14 @@
     flex-direction: row;
   }
 }
+.subscribe .container .signup-content form {
+  width: 80%;
+}
+@media (min-width: 1200px) {
+  .subscribe .container .signup-content form {
+    width: 50%;
+  }
+}
 .subscribe .container .signup-content form .checkbox-content {
   display: grid;
   grid-template-columns: auto;
@@ -80,7 +88,7 @@
 }
 .subscribe .container .signup-content form .signup-email input {
   height: 50px;
-  width: 250px;
+  width: 100%;
   margin-right: 20px;
 }
 @media (max-width: 768px) {
@@ -90,7 +98,7 @@
 }
 .subscribe .container .signup-content form .signup-email button {
   height: 50px;
-  width: 150px;
+  width: 200px;
 }
 @media (max-width: 768px) {
   .subscribe .container .signup-content form .signup-email button {

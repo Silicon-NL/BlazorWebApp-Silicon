@@ -10,12 +10,20 @@
   align-items: center;
 }
 #signUp-section .container .signUp-text {
-  text-align: left;
+  text-align: center;
   width: 80%;
 }
 @media (min-width: 1200px) {
   #signUp-section .container .signUp-text {
     width: 50%;
+  }
+}
+#signUp-section .container form {
+  width: 50%;
+}
+@media (max-width: 768px) {
+  #signUp-section .container form {
+    width: 100%;
   }
 }
 #signUp-section .container form label {

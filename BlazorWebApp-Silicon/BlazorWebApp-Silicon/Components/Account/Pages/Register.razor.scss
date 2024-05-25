@@ -10,7 +10,7 @@
 
 
         .signUp-text {
-            text-align: left;
+            text-align: center;
             width: 80%;
 
             @media(min-width: 1200px) {
@@ -19,6 +19,11 @@
         }
 
         form {
+            width: 50%;
+
+            @media(max-width: 768px) {
+                width: 100%;
+            }
 
             label {
                 font-weight: bold;

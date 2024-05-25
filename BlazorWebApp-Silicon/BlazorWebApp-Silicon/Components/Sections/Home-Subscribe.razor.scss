@@ -38,6 +38,11 @@
             }
 
             form {
+                width: 80%;
+
+                @media(min-width: 1200px) {
+                    width: 50%;
+                }
 
                 .checkbox-content {
                     display: grid;
@@ -85,7 +90,7 @@
 
                     input {
                         height: 50px;
-                        width: 250px;
+                        width: 100%;
                         margin-right: 20px;
 
                         @media(max-width: 768px) {
@@ -95,7 +100,7 @@
 
                     button {
                         height: 50px;
-                        width: 150px;
+                        width: 200px;
 
                         @media(max-width: 768px) {
                             width: 100%;

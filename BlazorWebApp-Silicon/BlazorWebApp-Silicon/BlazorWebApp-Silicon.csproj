@@ -24,8 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\scss\sections\" />
   </ItemGroup>
 
   <ItemGroup>

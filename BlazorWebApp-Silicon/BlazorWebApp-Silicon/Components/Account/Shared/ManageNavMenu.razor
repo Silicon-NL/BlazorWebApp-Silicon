@@ -2,36 +2,74 @@
 @using BlazorWebApp_Silicon.Data
 
 @inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">Profile</NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/Email">Email</NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/ChangePassword">Password</NavLink>
-    </li>
-    @if (hasExternalLogins)
-    {
-        <li class="nav-item">
-            <NavLink class="nav-link" href="Account/Manage/ExternalLogins">External logins</NavLink>
-        </li>
-    }
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/TwoFactorAuthentication">Two-factor authentication</NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/PersonalData">Personal data</NavLink>
-    </li>
-</ul>
+
+<section class="accountDetails">
+    <div class="container">
+        <div class="profileInfo">
+            <div class="userInfo">
+                @if (user != null)
+                {
+                    <div class="image-container">
+                        <form enctype="multipart/form-data" method="post" asp-action="UploadImage" asp-controller="Account">
+                            <input id="fileUploader" type="file" name="file" hidden />
+                            <label for="fileUploader" class="btn btn-circle-sm"><i class="fa-regular fa-refresh"></i></label>
+                        </form>
+                        <img src="/images/profile-header.svg" alt="profile image">
+                    </div>
+                    <h5>@user.UserProfile?.FirstName @user.UserProfile?.LastName</h5>
+                    <p>@user.Email</p>
+                }
+
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Account/Manage" Match="NavLinkMatch.All"><i class="fa-solid fa-gear"></i>Account Details</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Account/Manage/Email">Email</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Account/Manage/ChangePassword">Password</NavLink>
+                    </li>
+                    @if (hasExternalLogins)
+                    {
+                        <li class="nav-item">
+                            <NavLink class="menu-link" href="Account/Manage/ExternalLogins">External logins</NavLink>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Account/Manage/TwoFactorAuthentication">Two-factor authentication</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Account/Manage/PersonalData">Personal data</NavLink>
+                    </li>
+                </ul>
+            </div>
+            <nav>
+
+            </nav>
+        </div>
+    </div>
+</section>
+
+
+<a asp-controller="Account" asp-action="Security" class="menu-link"><i class="fa-solid fa-lock"></i>Security</a>
+<a asp-controller="Account" asp-action="SavedItems" class="menu-link"><i class="fa-regular fa-bookmark"></i>Saved Courses</a>
+<a asp-controller="Auth" asp-action="SignOut" class="menu-link"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
 
 @code {
+    private ApplicationUser? user;
     private bool hasExternalLogins;
 
     protected override async Task OnInitializedAsync()
     {
+        var email = SignInManager.Context.User?.Identity?.Name;
+        if (email != null)
+        {
+            user = await UserManager.FindByEmailAsync(email);
+        }
+
         hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
     }
 }

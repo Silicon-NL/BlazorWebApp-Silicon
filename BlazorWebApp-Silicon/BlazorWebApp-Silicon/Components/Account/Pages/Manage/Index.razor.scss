@@ -1,0 +1,180 @@
+.accountDetails {
+
+    .container {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+
+        @media(min-width: 992px) {
+            justify-content: left;
+            flex-direction: row;
+        }
+
+
+        .accountDetailsForms {
+            width: 100%;
+            text-align: center;
+
+            @media(min-width: 768px) {
+                text-align: left;
+            }
+
+
+            .basicInfo {
+                margin-bottom: 25px;
+                padding-bottom: 50px;
+                border-bottom: 1px solid gray;
+
+                h5 {
+                    color: var(--color-theme);
+                }
+
+                form {
+                    width: 100%;
+                    display: grid;
+                    gap: 10px;
+                    text-align: left;
+                    grid-template-columns: auto auto;
+                    grid-template-areas: "firstName lastName" "emailAddress phoneNumber" "bioInfo bioInfo" "btns btns";
+
+
+                    span {
+                        position: relative;
+
+                        &.field-validation-error {
+                            color: var(--color-danger);
+
+                            &::after {
+                                position: absolute;
+                                right: 10px;
+                                top: -10px;
+                                z-index: 10;
+                                font-size: 2em;
+                                display: block;
+                                content: '\2BBF';
+                            }
+                        }
+                    }
+
+                    .accountFormBox {
+                        display: flex;
+                        flex-direction: column;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                    }
+
+                    #firstName {
+                        grid-area: firstName;
+                    }
+
+                    #lastName {
+                        grid-area: lastName;
+                    }
+
+                    #emailAddress {
+                        grid-area: emailAddress;
+                    }
+
+                    #phoneNumber {
+                        grid-area: phoneNumber;
+                    }
+
+                    #bioInfo {
+                        grid-area: bioInfo;
+
+                        p {
+                            margin: 0;
+                        }
+                    }
+                }
+
+                .form-btn {
+                    grid-area: btns;
+                    display: flex;
+                    margin-top: 25px;
+                    justify-content: center;
+                    align-items: center;
+
+                    @media(min-width: 768px) {
+                        justify-content: left;
+                        align-items: flex-start;
+                    }
+
+
+
+                    .btn-gray, .btn-theme {
+                        padding: 0;
+                        margin: 5px;
+                        width: 150px;
+                        height: 50px;
+                    }
+                }
+            }
+
+            .addressInfo {
+                margin-bottom: 25px;
+                padding-bottom: 50px;
+
+                h5 {
+                    color: var(--color-theme);
+                }
+
+                form {
+                    width: 100%;
+                    display: grid;
+                    text-align: left;
+                    gap: 10px;
+                    grid-template-areas: "addressline1 addressline1" "addressline2 addressline2" "postalCode city" "btns btns";
+
+
+                    .accountFormBox {
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+
+                        input {
+                            width: 100%;
+                        }
+                    }
+
+                    #addressline1 {
+                        grid-area: addressline1;
+                        margin-right: 5px;
+                    }
+
+                    #addressline2 {
+                        grid-area: addressline2;
+                    }
+
+                    #postalCode {
+                        grid-area: postalCode;
+                        margin-right: 5px;
+                    }
+
+                    #city {
+                        grid-area: city;
+                    }
+                }
+
+                .form-btn {
+                    grid-area: btns;
+                    display: flex;
+                    margin-top: 25px;
+                    justify-content: center;
+                    align-items: center;
+
+                    @media(min-width: 768px) {
+                        justify-content: left;
+                        align-items: flex-start;
+                    }
+
+                    .btn-gray, .btn-theme {
+                        padding: 0;
+                        margin: 5px;
+                        width: 150px;
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -92,6 +92,7 @@
 }
 .contactShowcase .container .contactForm {
   margin-top: 30px;
+  justify-content: center;
   padding: 40px;
   color: black;
   background-color: white;
@@ -110,17 +111,20 @@
     right: 400px;
   }
 }
-.contactShowcase .container .contactForm form {
+.contactShowcase .container .contactForm editForm {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.contactShowcase .container .contactForm form input, .contactShowcase .container .contactForm form textarea {
+.contactShowcase .container .contactForm editForm input, .contactShowcase .container .contactForm editForm textarea {
   margin-bottom: 15px;
   padding: 10px;
 }
-.contactShowcase .container .contactForm form button {
+.contactShowcase .container .contactForm editForm button {
   margin-top: 20px;
+}
+.contactShowcase .contactMap {
+  margin-top: 30px;
 }
 .contactShowcase .contactMap img {
   width: 100%;

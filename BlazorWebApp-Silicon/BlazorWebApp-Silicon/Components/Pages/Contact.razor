@@ -2,8 +2,43 @@
 
 <PageTitle>Contact</PageTitle>
 
+<section class="contactShowcase">
+    <div class="container">
 
+        <div class="top-text">
+            <ul class="breadcrumb">
+                <li><i class="fa-solid fa-house"></i><a asp-action="Index" asp-controller="Home">Home</a></li>
+                <li><i class="fa-solid fa-angles-right"></i><a asp-action="Index" asp-controller="Contact"></a>Contact</li>
+            </ul>
+        </div>
+        <h1>Contact Us</h1>
+        <div class="contactUs">
+            <div class="email-info">
+                <img src="/images/EmailUsIcon.svg" alt="Email icon">
+                <div class="email-info-text">
+                    <h5>Email us</h5>
+                    <p>Please feel free to drop us a line. We will respond as soon as possible.</p>
+                    <NavLink href="/contact">Leave a message<i class="fa-solid fa-arrow-right"></i></NavLink>
+                </div>
+            </div>
+            <div class="career-info">
+                <img src="/images/CareersIcon.svg" alt="Career icon">
+                <div class="career-info-text">
+                    <h5>Careers</h5>
+                    <p>Sit ac ipsum leo lorem magna nunc mattis maecenas non vestibulum.</p>
+                    <NavLink href="/contact">Send an application<i class="fa-solid fa-arrow-right"></i></NavLink>
+                </div>
+            </div>
+        </div>
 
-@code {
+        <div class="contactForm">
+            <h2>Get In Contact With Us</h2>
+            <BlazorWebApp_Silicon.Components.Sections.Contact_MainForm />
+        </div>
+    </div>
+    <div class="contactMap">
+        <img src="/images/ContactMapImage.svg" alt="Map image">
+    </div>
 
-}
+</section>
+

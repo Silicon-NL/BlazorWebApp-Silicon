@@ -2,12 +2,6 @@
 form {
     display: flex;
     flex-direction: column;
-    width: 80%;
-
-    @media(min-width: 1200px) {
-        width: 50%;
-    }
-
 
     label {
         margin-top: 20px;

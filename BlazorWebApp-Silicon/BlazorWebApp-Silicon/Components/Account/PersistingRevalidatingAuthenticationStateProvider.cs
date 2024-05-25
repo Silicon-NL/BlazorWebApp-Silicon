@@ -6,19 +6,18 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Security.Claims;
 
 namespace BlazorWebApp_Silicon.Components.Account
 {
-    // This is a server-side AuthenticationStateProvider that revalidates the security stamp for the connected user
-    // every 30 minutes an interactive circuit is connected. It also uses PersistentComponentState to flow the
-    // authentication state to the client which is then fixed for the lifetime of the WebAssembly application.
     internal sealed class PersistingRevalidatingAuthenticationStateProvider : RevalidatingServerAuthenticationStateProvider
     {
         private readonly IServiceScopeFactory scopeFactory;
         private readonly PersistentComponentState state;
         private readonly IdentityOptions options;
+        private readonly ILogger<PersistingRevalidatingAuthenticationStateProvider> logger;
 
         private readonly PersistingComponentStateSubscription subscription;
 
@@ -34,6 +33,7 @@ namespace BlazorWebApp_Silicon.Components.Account
             scopeFactory = serviceScopeFactory;
             state = persistentComponentState;
             options = optionsAccessor.Value;
+            logger = loggerFactory.CreateLogger<PersistingRevalidatingAuthenticationStateProvider>();
 
             AuthenticationStateChanged += OnAuthenticationStateChanged;
             subscription = state.RegisterOnPersisting(OnPersistingAsync, RenderMode.InteractiveWebAssembly);
@@ -44,10 +44,18 @@ namespace BlazorWebApp_Silicon.Components.Account
         protected override async Task<bool> ValidateAuthenticationStateAsync(
             AuthenticationState authenticationState, CancellationToken cancellationToken)
         {
-            // Get the user manager from a new scope to ensure it fetches fresh data
-            await using var scope = scopeFactory.CreateAsyncScope();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            return await ValidateSecurityStampAsync(userManager, authenticationState.User);
+            try
+            {
+                await using var scope = scopeFactory.CreateAsyncScope();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                return await ValidateSecurityStampAsync(userManager, authenticationState.User);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for better debugging
+                logger.LogError(ex, "Error validating authentication state");
+                throw;
+            }
         }
 
         private async Task<bool> ValidateSecurityStampAsync(UserManager<ApplicationUser> userManager, ClaimsPrincipal principal)
@@ -76,34 +84,46 @@ namespace BlazorWebApp_Silicon.Components.Account
 
         private async Task OnPersistingAsync()
         {
-            if (authenticationStateTask is null)
+            try
             {
-                throw new UnreachableException($"Authentication state not set in {nameof(OnPersistingAsync)}().");
-            }
-
-            var authenticationState = await authenticationStateTask;
-            var principal = authenticationState.User;
-
-            if (principal.Identity?.IsAuthenticated == true)
-            {
-                var userId = principal.FindFirst(options.ClaimsIdentity.UserIdClaimType)?.Value;
-                var email = principal.FindFirst(options.ClaimsIdentity.EmailClaimType)?.Value;
-
-                if (userId != null && email != null)
+                if (authenticationStateTask is null)
                 {
-                    state.PersistAsJson(nameof(UserInfo), new UserInfo
-                    {
-                        UserId = userId,
-                        Email = email,
-                    });
+                    throw new UnreachableException($"Authentication state not set in {nameof(OnPersistingAsync)}().");
                 }
+
+                var authenticationState = await authenticationStateTask;
+                var principal = authenticationState.User;
+
+                if (principal.Identity?.IsAuthenticated == true)
+                {
+                    var userId = principal.FindFirst(options.ClaimsIdentity.UserIdClaimType)?.Value;
+                    var email = principal.FindFirst(options.ClaimsIdentity.EmailClaimType)?.Value;
+
+                    if (userId != null && email != null)
+                    {
+                        state.PersistAsJson(nameof(UserInfo), new UserInfo
+                        {
+                            UserId = userId,
+                            Email = email,
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for better debugging
+                logger.LogError(ex, "Error during persisting authentication state");
+                throw;
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            subscription.Dispose();
-            AuthenticationStateChanged -= OnAuthenticationStateChanged;
+            if (disposing)
+            {
+                subscription.Dispose();
+                AuthenticationStateChanged -= OnAuthenticationStateChanged;
+            }
             base.Dispose(disposing);
         }
     }

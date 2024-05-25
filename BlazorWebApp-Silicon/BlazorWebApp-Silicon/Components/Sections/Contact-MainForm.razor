@@ -1,0 +1,102 @@
+﻿
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @ErrorMessage
+    </div>
+}
+@if (!string.IsNullOrEmpty(ConfirmMessage))
+{
+    <div class="alert alert-success">
+        @ConfirmMessage
+    </div>
+}
+
+<EditForm Model="@ContactMessageForm" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div>
+        <label>Fullname</label>
+        <InputText @bind-Value="ContactMessageForm.Fullname" class="form-control" />
+        <ValidationMessage For="() => ContactMessageForm.Fullname" />
+    </div>
+
+    <div>
+        <label>Email Address</label>
+        <InputText @bind-Value="ContactMessageForm.EmailAddress" type="email" class="form-control" />
+        <ValidationMessage For="() => ContactMessageForm.EmailAddress" />
+    </div>
+
+    <div>
+        <label>Select a service:</label>
+        <InputSelect @bind-Value="ContactMessageForm.SelectedService" class="form-control">
+            <option value="">-- Select a service --</option>
+            <option value="Order">Order</option>
+            <option value="Support">Support</option>
+        </InputSelect>
+        <ValidationMessage For="() => ContactMessageForm.SelectedService" />
+    </div>
+
+    <div>
+        <label>Message</label>
+        <InputTextArea @bind-Value="ContactMessageForm.Message" class="form-control" />
+        <ValidationMessage For="() => ContactMessageForm.Message" />
+    </div>
+
+    <button type="submit" class="btn-theme">Send Contact Request</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? ConfirmMessage { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? ErrorMessage { get; set; }
+
+    public ContactMessageFormModel ContactMessageForm { get; set; } = new ContactMessageFormModel();
+
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
+    public async Task OnValidSubmit()
+    {
+        var response = await Http.PostAsJsonAsync("", new
+        {
+            Email = ContactMessageForm.EmailAddress,
+            Service = ContactMessageForm.SelectedService,
+            Message = ContactMessageForm.Message
+        });
+
+        if (response.IsSuccessStatusCode)
+        {
+            ConfirmMessage = "Your message has been sent";
+            RedirectManager.RedirectTo("");
+        }
+        else
+        {
+            ErrorMessage = "Unable to send message. Please try again later.";
+        }
+    }
+
+    public class ContactMessageFormModel
+    {
+        [Required]
+        [Display(Name = "Fullname", Prompt = "Enter your name")]
+        public string Fullname { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Email address", Prompt = "Enter your email address")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
+        public string EmailAddress { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "SelectedService", Prompt = "Service")]
+        public string SelectedService { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Message", Prompt = "Enter your message")]
+        [DataType(DataType.MultilineText)]
+        public string Message { get; set; } = null!;
+    }
+}

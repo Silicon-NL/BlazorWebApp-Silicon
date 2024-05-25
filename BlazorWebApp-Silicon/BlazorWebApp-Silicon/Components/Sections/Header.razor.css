@@ -39,6 +39,10 @@
   height: 50px;
   width: 50px;
 }
+.header .container .profile-img .active {
+  color: transparent;
+  background-color: transparent;
+}
 .header .container #menu {
   grid-area: menu;
   display: none;
