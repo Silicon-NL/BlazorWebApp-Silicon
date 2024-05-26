@@ -54,5 +54,13 @@
   {
     "outputFile": "Components/Account/Shared/ManageNavMenu.razor.css",
     "inputFile": "Components/Account/Shared/ManageNavMenu.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/Manage/ChangePassword.razor.css",
+    "inputFile": "Components/Account/Pages/Manage/ChangePassword.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/Manage/Notifications.razor.css",
+    "inputFile": "Components/Account/Pages/Manage/Notifications.razor.scss"
   }
 ]
