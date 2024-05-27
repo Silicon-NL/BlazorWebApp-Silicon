@@ -1,0 +1,157 @@
+﻿@page "/chat"
+
+@rendermode InteractiveAuto
+
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<section class="chatSection">
+    <div class="chat-col">
+        <div class="chat-card">
+            <div class="chat-card-body">
+                <div class="chat-card-header">
+                    <h3>Messages</h3>
+                    <h6>@userName</h6>
+
+                    <div class="chat-card-header-btn">
+                        <button class="btn btn-theme">Clear chat</button>
+                        <button class="btn btn-gray">More</button>
+                    </div>
+                    
+                </div>
+
+                <ul class="chat-list-group">
+                    @foreach (var message in messages)
+                    {
+                        <li class="chat-list-group-item @(message.UserName == userName ? "chat-bubble-right" : "chat-bubble-left")">
+                            <div>
+                                <strong>@message.UserName</strong> <span>@message.Created.ToString("G")</span>
+                            </div>
+
+                            <div>@message.Message</div>
+                        </li>
+                    }
+                </ul>
+
+                <div class="mt-3" style="height: 20px">
+                    @if (!string.IsNullOrEmpty(typingUser))
+                    {
+                        <div>@typingUser is typing <span class="typing-indicator">...</span></div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="mt-2">
+                    <textarea class="form-control" placeholder="Message" @bind="currentMessage" @oninput="NotifyTyping"></textarea>
+                </div>
+                <div class="col-2 my-3">
+                    <button class="btn btn-theme w-100" @onclick="Send">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private HubConnection? connection;
+    private bool isConnected => connection?.State == HubConnectionState.Connected;
+    private string? userName;
+    private string? typingUser;
+
+    private System.Timers.Timer? typingTimer;
+
+    private List<ChatMessage> messages = new();
+    private string? currentMessage;
+
+    private class ChatMessage
+    {
+        public string? Message { get; set; }
+        public string? UserName { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
+    }
+
+    private async Task NotifyTyping()
+    {
+        if (isConnected)
+        {
+            await connection!.SendAsync("Typing", userName);
+        }
+    }
+
+    private async Task Send()
+    {
+        if (!string.IsNullOrWhiteSpace(currentMessage))
+        {
+            var newMessage = new ChatMessage { UserName = userName, Message = currentMessage, Created = DateTime.Now };
+
+            try
+            {
+                await connection!.SendAsync("SendMessageToAll", newMessage.UserName, newMessage.Message, newMessage.Created);
+                Console.WriteLine("Message sent: " + newMessage.Message);
+                messages.Add(newMessage);
+                currentMessage = string.Empty;
+                await InvokeAsync(StateHasChanged);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending message: {ex.Message}");
+            }
+
+            
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            userName = user.Identity.Name;
+        }
+        else
+        {
+            userName = "Anonymous";
+        }
+
+        connection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        connection.On<string, string?, string, DateTime>("ReceiveMessage", (fromUser, toUser, message, dateTime) =>
+        {
+            var newMessage = new ChatMessage { UserName = fromUser, Message = message, Created = dateTime };
+            messages.Add(newMessage);
+            Console.WriteLine("Message received: " + newMessage.Message);
+            InvokeAsync(StateHasChanged);
+        });
+
+        connection.On<string>("UserTyping", (typingUserName) =>
+        {
+            typingUser = typingUserName;
+            InvokeAsync(StateHasChanged);
+
+            typingTimer?.Stop();
+            typingTimer = new System.Timers.Timer(2000);
+            typingTimer.Elapsed += (s, e) =>
+            {
+                typingUser = null;
+                InvokeAsync(StateHasChanged);
+            };
+
+            typingTimer.Start();
+        });
+
+        try
+        {
+            await connection.StartAsync();
+            Console.WriteLine("Connection started.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error starting connection: {ex.Message}");
+        }
+    }
+}

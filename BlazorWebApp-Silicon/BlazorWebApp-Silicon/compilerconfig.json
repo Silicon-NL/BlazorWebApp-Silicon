@@ -62,5 +62,9 @@
   {
     "outputFile": "Components/Account/Pages/Manage/Notifications.razor.css",
     "inputFile": "Components/Account/Pages/Manage/Notifications.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/Manage/Messages.razor.css",
+    "inputFile": "Components/Account/Pages/Manage/Messages.razor.scss"
   }
 ]

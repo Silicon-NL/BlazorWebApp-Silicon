@@ -1,6 +1,7 @@
 using BlazorWebApp_Silicon.Components;
 using BlazorWebApp_Silicon.Components.Account;
 using BlazorWebApp_Silicon.Data;
+using BlazorWebApp_Silicon.Hubs;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,5 +74,7 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

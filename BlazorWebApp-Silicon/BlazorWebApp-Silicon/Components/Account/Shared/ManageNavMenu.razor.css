@@ -57,6 +57,22 @@
   align-items: center;
   text-align: center;
 }
+.accountDetails .container .profileInfo .userInfo ul {
+  width: 100%;
+}
+.accountDetails .container .profileInfo .userInfo ul li {
+  width: 100%;
+  padding: 5px;
+}
+.accountDetails .container .profileInfo .userInfo ul li a {
+  width: 300px;
+}
+.accountDetails .container .profileInfo .userInfo ul li .menu-link {
+  width: 100%;
+  padding-right: 10%;
+  padding-left: 10%;
+  font-weight: 500;
+}
 .accountDetails .container .profileInfo .userInfo .image-container {
   position: relative;
   width: 100px;

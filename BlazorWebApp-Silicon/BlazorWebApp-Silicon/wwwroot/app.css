@@ -671,6 +671,22 @@ a:hover {
   align-items: center;
   text-align: center;
 }
+.accountDetails .container .profileInfo .userInfo ul {
+  width: 100%;
+}
+.accountDetails .container .profileInfo .userInfo ul li {
+  width: 100%;
+  padding: 5px;
+}
+.accountDetails .container .profileInfo .userInfo ul li a {
+  width: 300px;
+}
+.accountDetails .container .profileInfo .userInfo ul li .menu-link {
+  width: 100%;
+  padding-right: 10%;
+  padding-left: 10%;
+  font-weight: 500;
+}
 .accountDetails .container .profileInfo .userInfo .image-container {
   position: relative;
   width: 100px;
@@ -773,6 +789,66 @@ a:hover {
   width: 100px;
   background-color: red;
   margin-top: 20px;
+}
+
+.notificationSection form .email-notification {
+  display: flex;
+  flex-direction: column;
+}
+.notificationSection form .email-notification label {
+  font-weight: 500;
+}
+.notificationSection form .email-notification .email-notification-input {
+  width: 50%;
+}
+.notificationSection form .btn-switch .subscribeNewsletterText label {
+  font-weight: 500;
+}
+.notificationSection form .btn-switch .DarkModeText label {
+  font-weight: 500;
+}
+.notificationSection form .form-btn {
+  margin-top: 50px;
+  display: flex;
+  width: 50%;
+}
+.notificationSection form .form-btn button {
+  margin: 5px;
+}
+
+.chatSection {
+  width: 80%;
+}
+.chatSection .chat-col .chat-card .chat-card-body {
+  height: 500px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.chatSection .chat-col .chat-card .chat-card-body .chat-card-header {
+  display: flex;
+  background-color: var(--color-gray-100);
+  border-bottom: 1px solid gray;
+  height: 50px;
+}
+.chatSection .chat-col .chat-card .chat-card-body .chat-card-header h3 {
+  width: 150px;
+  height: 100%;
+  padding: 5px;
+  border-right: 1px solid gray;
+}
+.chatSection .chat-col .chat-card .chat-card-body .chat-card-header h6 {
+  padding: 15px;
+  margin-right: 20%;
+}
+.chatSection .chat-col .chat-card .chat-card-body .chat-card-header .chat-card-header-btn {
+  display: flex;
+  padding: 5px;
+}
+.chatSection .chat-col .chat-card .chat-card-body .chat-list-group .chat-list-group-item {
+  margin-top: 20px;
+  background-color: var(--color-gray-100);
+  border-radius: 5px;
+  width: 200px;
 }
 
 .contactShowcase {

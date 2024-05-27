@@ -7,34 +7,34 @@
     
     <div class="email-notification">
         <label>Preferred email for notifications</label>
-            <InputText @bind-Value="accountNotifications.NotificationEmail" placeholder="example@gmail.com" />
+        <InputText class="email-notification-input" @bind-Value="accountNotifications.NotificationEmail" placeholder="example@gmail.com" />
     </div>
 
         <div class="btn-switch subscribeNewsletter">
       
-        <label class="switch" for="switch-mode">
-            <input type="checkbox" id="switch-mode" />
-            <div class="slider round"></div>
-        </label>
-            <div class="subscribeNewsletterText">
-                <label>Subscribe to Newsletter</label>
-                <p>Nec, posuere non felis duis massa vitae aliquet interdum scelerisque. Neque ullamcorper.</p>
-            </div>
+            <label class="switch" for="switch-mode">
+                <input type="checkbox" id="switch-mode" />
+                <div class="slider round"></div>
+            </label>
+                <div class="subscribeNewsletterText">
+                    <label>Subscribe to Newsletter</label>
+                    <p>Nec, posuere non felis duis massa vitae aliquet interdum scelerisque. Neque ullamcorper.</p>
+                </div>
             
-    </div>
+        </div>
 
         <div class="btn-switch DarkMode">
 
-        <label class="switch" for="switch-mode">
-            <input type="checkbox" id="switch-mode" />
-            <div class="slider round"></div>
-        </label>
+            <label class="switch" for="switch-mode">
+                <input type="checkbox" id="switch-mode" />
+                <div class="slider round"></div>
+            </label>
 
-            <div class="DarkModeText">
-                <label>Use Dark Mode Theme in Application</label>
-                <p>Tortor massa porttitor enim tristique neque fermentum sed.</p>
-            </div>
-    </div>
+                <div class="DarkModeText">
+                    <label>Use Dark Mode Theme in Application</label>
+                    <p>Tortor massa porttitor enim tristique neque fermentum sed.</p>
+                </div>
+        </div>
 
         <div class="form-btn">
             <button class="btn-gray" type="reset">Cancel</button>

@@ -1,0 +1,60 @@
+.notificationSection {
+
+    form {
+
+        .email-notification {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                font-weight: 500;
+            }
+
+            .email-notification-input {
+                width: 50%;
+            }
+        }
+
+        .btn-switch {
+
+
+            .switch-notification {
+
+                input:checked {
+
+                    .slider {
+
+                    }
+                }
+
+
+                .slider::after {
+                }
+            }
+
+            .subscribeNewsletterText {
+
+                label {
+                    font-weight: 500;
+                }
+            }
+
+            .DarkModeText {
+
+                label {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .form-btn {
+            margin-top: 50px;
+            display: flex;
+            width: 50%;
+            
+            button {
+                margin: 5px;
+            }
+        }
+    }
+}
