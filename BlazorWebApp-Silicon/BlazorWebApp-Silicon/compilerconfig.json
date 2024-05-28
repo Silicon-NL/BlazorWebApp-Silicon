@@ -66,5 +66,9 @@
   {
     "outputFile": "Components/Account/Pages/Manage/Messages.razor.css",
     "inputFile": "Components/Account/Pages/Manage/Messages.razor.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/site.es5.js",
+    "inputFile": "wwwroot/js/site.js"
   }
 ]

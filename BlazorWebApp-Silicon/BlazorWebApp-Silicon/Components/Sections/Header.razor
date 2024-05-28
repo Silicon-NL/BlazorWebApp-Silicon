@@ -33,34 +33,9 @@
                 </NotAuthorized>
             </AuthorizeView>
         </div>
-
-        <AuthorizeView>
-            <Authorized>
-                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-                <div class="mobile-menu">
-                    <nav>
-                        <NavLink class="menu-link" href="/Details">Overview</NavLink>
-                        <NavLink class="menu-link" href="/Courses">Courses</NavLink>
-                        <NavLink class="menu-link" href="/Contact">Contact</NavLink>
-                        <NavLink class="menu-link" href="/SignOut">Sign out</NavLink>
-                        <NavLink class="menu-link" href="/Admin">Admin</NavLink>
-                    </nav>
-                </div>
-            </Authorized>
-        </AuthorizeView>
-
-        <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-        <div class="mobile-menu">
-            <nav>
-                <NavLink class="menu-link" href="#showcase">Showcase</NavLink>
-                <NavLink class="menu-link" href="#benefits">Features</NavLink>
-                <NavLink class="menu-link" href="/Contact">Contact</NavLink>
-                <NavLink class="menu-link" href="/SignIn">Sign in</NavLink>
-                <NavLink class="menu-link" href="/SignUp">Sign up</NavLink>
-            </nav>
+            <BlazorWebApp_Silicon.Client.Components.HeaderMobileMenu />
         </div>
 
-    </div>
 </header>
 
 @code {

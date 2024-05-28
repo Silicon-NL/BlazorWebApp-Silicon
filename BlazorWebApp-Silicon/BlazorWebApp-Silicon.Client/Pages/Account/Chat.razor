@@ -9,7 +9,7 @@
 <section class="chatSection">
     <div class="chat-col">
         <div class="chat-card">
-            <div class="chat-card-body">
+            <div class="container">
                 <div class="chat-card-header">
                     <h3>Messages</h3>
                     <h6>@userName</h6>
@@ -40,15 +40,16 @@
                         <div>@typingUser is typing <span class="typing-indicator">...</span></div>
                     }
                 </div>
-            </div>
-            <div class="card-footer">
-                <div class="mt-2">
-                    <textarea class="form-control" placeholder="Message" @bind="currentMessage" @oninput="NotifyTyping"></textarea>
+                <div class="chat-card-footer">
+                    <div class="chat-card-footer-content">
+                        <textarea class="form-control" placeholder="Message" @bind="currentMessage" @oninput="NotifyTyping"></textarea>
+                    </div>
+                    <div class="chat-card-footer-content">
+                        <button class="btn btn-theme" @onclick="Send"><i class="fa-regular fa-play"></i></button>
+                    </div>
                 </div>
-                <div class="col-2 my-3">
-                    <button class="btn btn-theme w-100" @onclick="Send">Send Message</button>
-                </div>
             </div>
+
         </div>
     </div>
 </section>

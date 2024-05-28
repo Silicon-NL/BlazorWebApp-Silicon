@@ -1,0 +1,53 @@
+﻿@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Authorization
+
+<AuthorizeView>
+    <Authorized>
+        <button class="mobile-menu-btn" @onclick="ToggleMobileMenu"><i class="fa-solid fa-bars"></i></button>
+        @if (isMobileMenuVisible)
+        {
+            <div class="mobile-menu">
+                <nav>
+                    <NavLink class="menu-link" href="/#showcase" @onclick="HideMobileMenu">Overview</NavLink>
+                    <NavLink class="menu-link" href="/Account/manage" @onclick="HideMobileMenu">Account</NavLink>
+                    <NavLink class="menu-link" href="/Courses" @onclick="HideMobileMenu">Courses</NavLink>
+                    <NavLink class="menu-link" href="/Contact" @onclick="HideMobileMenu">Contact</NavLink>
+                    <NavLink class="menu-link" href="/SignOut" @onclick="HideMobileMenu">Sign out</NavLink>
+                    <NavLink class="menu-link" href="/Admin" @onclick="HideMobileMenu">Admin</NavLink>
+                </nav>
+            </div>
+        }
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView>
+    <NotAuthorized>
+        <button class="mobile-menu-btn" @onclick="ToggleMobileMenu"><i class="fa-solid fa-bars"></i></button>
+        @if (isMobileMenuVisible)
+        {
+            <div class="mobile-menu">
+                <nav>
+                    <NavLink class="menu-link" href="#showcase" @onclick="HideMobileMenu">Showcase</NavLink>
+                    <NavLink class="menu-link" href="#benefits" @onclick="HideMobileMenu">Features</NavLink>
+                    <NavLink class="menu-link" href="/Contact" @onclick="HideMobileMenu">Contact</NavLink>
+                    <NavLink class="menu-link" href="/account/login" @onclick="HideMobileMenu">Sign in</NavLink>
+                    <NavLink class="menu-link" href="/account/register" @onclick="HideMobileMenu">Sign up</NavLink>
+                </nav>
+            </div>
+        }
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private bool isMobileMenuVisible = false;
+
+    private void ToggleMobileMenu()
+    {
+        isMobileMenuVisible = !isMobileMenuVisible;
+    }
+
+    private void HideMobileMenu()
+    {
+        isMobileMenuVisible = false;
+    }
+}
