@@ -1,23 +1,277 @@
 ﻿@page "/Account/Manage"
-@using static BlazorWebApp_Silicon.Components.Account.Pages.Manage.BasicInfoForm
-@using static BlazorWebApp_Silicon.Components.Account.Pages.Manage.AddressInfoForm
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using BlazorWebApp_Silicon.Data
+@using Microsoft.EntityFrameworkCore
+
 <PageTitle>Profile</PageTitle>
 
-<h3>Profile</h3>
 <StatusMessage />
 
 <section class="accountDetails">
     <div class="container">
         <div class="accountDetailsForms">
 
-            <BasicInfoForm/>
-            
-            @* <AddressInfoForm />  *@
+            <EditForm FormName="combinedModel" Model="combinedModel" OnValidSubmit="@OnValidSubmitAsync" method="post" novalidate>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <h1>Account details</h1>
+                <h5>Account info</h5>
+
+                <div class="basicInfo">
+
+                    <div id="firstName" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.FirstName" disabled />
+                        }
+                        else
+                        {
+                            <label>First Name</label>
+                            <InputText @bind-Value="combinedModel.FirstName" />
+                            <ValidationMessage For="() => combinedModel.FirstName" />
+                        }
+                    </div>
+                    <div id="lastName" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.LastName" disabled />
+                        }
+                        else
+                        {
+                            <label>Last Name</label>
+                            <InputText @bind-Value="combinedModel.LastName" />
+                            <ValidationMessage For="() => combinedModel.LastName" />
+                        }
+                    </div>
+                    <div id="emailAddress" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.Email" disabled />
+                        }
+                        else
+                        {
+                            <label>Email address</label>
+                            <InputText @bind-Value="combinedModel.Email" />
+                            <ValidationMessage For="() => combinedModel.Email" />
+                        }
+                    </div>
+                    <div id="phoneNumber" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.Phone" disabled />
+                        }
+                        else
+                        {
+                            <label>Phone (optional)</label>
+                            <InputText @bind-Value="combinedModel.Phone" />
+                        }
+                    </div>
+                    <div id="bioInfo" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.Biography" disabled />
+                        }
+                        else
+                        {
+                            <label>Biography</label>
+                            <InputText @bind-Value="combinedModel.Biography" />
+                        }
+                    </div>
+                </div>
+
+                <h5>Address</h5>
+
+                <div class="addressInfo">
+                    
+                    <div id="addressline1" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.AddressLine_1" disabled />
+                        }
+                        else
+                        {
+                            <label>AddressLine 1</label>
+                            <InputText @bind-Value="combinedModel.AddressLine_1" />
+                            <ValidationMessage For="() => combinedModel.AddressLine_1" />
+                        }
+                    </div>
+                    <div id="addressline2" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.AddressLine_2" disabled />
+                        }
+                        else
+                        {
+                            <label>AddressLine 2 (optional)</label>
+                            <InputText @bind-Value="combinedModel.AddressLine_2" />
+                        }
+                    </div>
+                    <div id="postalCode" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.PostalCode" disabled />
+                        }
+                        else
+                        {
+                            <label>Postal Code</label>
+                            <InputText @bind-Value="combinedModel.PostalCode" />
+                            <ValidationMessage For="() => combinedModel.PostalCode" />
+                        }
+                    </div>
+                    <div id="city" class="accountFormBox">
+                        @if (isExternalAccount)
+                        {
+                            <InputText @bind-Value="combinedModel.City" disabled />
+                        }
+                        else
+                        {
+                            <label>City</label>
+                            <InputText @bind-Value="combinedModel.City" />
+                            <ValidationMessage For="() => combinedModel.City" />
+                        }
+                    </div>
+                </div>
+
+                <div class="form-btn">
+                    <button class="btn-gray" type="reset">Cancel</button>
+                    <button class="btn-theme" type="submit">Save changes</button>
+                </div>
+            </EditForm>
 
         </div>
     </div>
 </section>
 
 @code {
+    private bool isExternalAccount;
+    private bool isInitialized = false;
 
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm]
+    public CombinedFormModel combinedModel { get; set; } = new CombinedFormModel();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+            var logins = await UserManager.GetLoginsAsync(user);
+            isExternalAccount = logins.Any();
+
+            var userProfile = await DbContext.AspNetUserProfiles.FirstOrDefaultAsync(x => x.Id == user.ApplicationUserProfileId);
+            var userAddress = await DbContext.AspNetUserAddresses.FirstOrDefaultAsync(x => x.Id == user.ApplicationUserAddressId);
+
+            if (combinedModel != null)
+            {
+                if (combinedModel.FirstName == null) { combinedModel.FirstName = userProfile.FirstName; }
+
+                if (combinedModel.LastName == null) { combinedModel.LastName = userProfile.LastName; }
+                if (combinedModel.Email == null) { combinedModel.Email = user.Email; }
+                if (combinedModel.Phone == null) { combinedModel.Phone = userProfile.PhoneNumber; }
+                if (combinedModel.Biography == null) { combinedModel.Biography = userProfile.Biography; }
+
+                if (combinedModel.AddressLine_1 == null) { combinedModel.AddressLine_1 = userAddress.AddressLine_1; }
+                if (combinedModel.AddressLine_2 == null) { combinedModel.AddressLine_2 = userAddress.AddressLine_2; }
+                if (combinedModel.PostalCode == null) { combinedModel.PostalCode = userAddress.PostalCode; }
+                if (combinedModel.City == null) { combinedModel.City = userAddress.City; }
+
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        try
+        {
+
+            var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+
+            if (user != null)
+            {
+                var userProfile = await DbContext.AspNetUserProfiles.FirstOrDefaultAsync(x => x.Id == user.ApplicationUserProfileId);
+                var userAddress = await DbContext.AspNetUserAddresses.FirstOrDefaultAsync(x => x.Id == user.ApplicationUserAddressId);
+
+                userProfile.FirstName = combinedModel.FirstName;
+                userProfile.LastName = combinedModel.LastName;
+                user.Email = combinedModel.Email;
+                userProfile.PhoneNumber = combinedModel.Phone;
+                userProfile.Biography = combinedModel.Biography;
+                userAddress.AddressLine_1 = combinedModel.AddressLine_1;
+                userAddress.AddressLine_2 = combinedModel.AddressLine_2;
+                userAddress.PostalCode = combinedModel.PostalCode;
+                userAddress.City = combinedModel.City;
+
+                await DbContext.SaveChangesAsync();
+
+                await SignInManager.RefreshSignInAsync(user);
+                RedirectManager.RedirectToCurrentPageWithStatus("Your profile has been updated", HttpContext);
+            }
+
+
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            Console.WriteLine("Concurrency error: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+            throw;
+        }
+    }
+
+    public class CombinedFormModel
+    {
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Email address")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
+        public string Email { get; set; } = null!;
+
+        [Display(Name = "Phone (optional)")]
+        [DataType(DataType.PhoneNumber)]
+        public string? Phone { get; set; }
+
+        [Display(Name = "Biography")]
+        [DataType(DataType.MultilineText)]
+        public string? Biography { get; set; }
+
+        [Required]
+        [Display(Name = "Address Line 1")]
+        public string? AddressLine_1 { get; set; }
+
+        [Display(Name = "Address Line 2 (optional)")]
+        public string? AddressLine_2 { get; set; }
+
+        [Required]
+        [Display(Name = "Postal Code")]
+        public string? PostalCode { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        public string? City { get; set; }
+    }
 }

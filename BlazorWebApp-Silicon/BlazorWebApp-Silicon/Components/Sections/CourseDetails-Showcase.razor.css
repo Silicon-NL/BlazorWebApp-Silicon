@@ -1,0 +1,80 @@
+﻿.courseDescription-showcase {
+  background-color: var(--color-gray-300);
+}
+.courseDescription-showcase .courseDescription-image {
+  width: 100%;
+  height: 500px;
+}
+.courseDescription-showcase .courseDescription-image img {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content {
+  position: absolute;
+  z-index: 2;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top {
+  color: white;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top i {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top a {
+  color: black;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text {
+  display: flex;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text p {
+  padding: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text .best-seller {
+  background-color: #22C55E;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text .digital {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content h1, .courseDescription-showcase .container .courseDescription-showcase-content p {
+  color: white;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .rating {
+  display: flex;
+  flex-direction: row;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .rating i {
+  margin-right: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .rating p {
+  margin-right: 20px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info {
+  display: flex;
+  align-items: center;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info p {
+  margin-bottom: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info .creator-text {
+  margin-left: 20px;
+}

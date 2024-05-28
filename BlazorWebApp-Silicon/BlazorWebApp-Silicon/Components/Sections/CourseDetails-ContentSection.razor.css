@@ -1,0 +1,93 @@
+﻿.courseDescription-contentSection {
+  margin-top: 90px;
+}
+.courseDescription-contentSection .container .content-top {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-top {
+    flex-direction: row;
+  }
+}
+.courseDescription-contentSection .container .content-top .content-top-text {
+  margin-right: 50px;
+}
+.courseDescription-contentSection .container .content-top .content-top-text ul {
+  padding: 0;
+  list-style: none;
+}
+.courseDescription-contentSection .container .content-top .content-top-text ul i {
+  margin-right: 5px;
+  color: var(--color-theme);
+}
+.courseDescription-contentSection .container .content-top .content-top-right {
+  width: 50%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-top .content-top-right {
+    width: 100%;
+  }
+}
+.courseDescription-contentSection .container .content-top .content-top-right i {
+  margin-right: 5px;
+}
+.courseDescription-contentSection .container .content-top .content-top-right .price {
+  display: flex;
+}
+.courseDescription-contentSection .container .content-top .content-top-right .price p {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.courseDescription-contentSection .container .content-mid {
+  margin-top: 100px;
+}
+.courseDescription-contentSection .container .content-mid h1 {
+  margin-bottom: 50px;
+}
+.courseDescription-contentSection .container .content-mid img {
+  margin-right: 20px;
+}
+.courseDescription-contentSection .container .content-mid #content-mid-box {
+  display: flex;
+}
+.courseDescription-contentSection .container .content-mid #content-mid-box-text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.courseDescription-contentSection .container .content-bottom {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-bottom {
+    flex-direction: row;
+  }
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background-color: black;
+  padding: 50px;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-bottom .content-bottom-text {
+    width: 500px;
+  }
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text h1 {
+  color: white;
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text #yt {
+  background-color: red;
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text #fb {
+  background-color: blue;
+}

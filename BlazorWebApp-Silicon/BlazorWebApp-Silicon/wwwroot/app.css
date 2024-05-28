@@ -483,29 +483,81 @@ a:hover {
     text-align: left;
   }
 }
-.accountDetails .container .accountDetailsForms .basicInfo {
-  margin-bottom: 25px;
-  padding-bottom: 50px;
-  border-bottom: 1px solid gray;
-}
-.accountDetails .container .accountDetailsForms .basicInfo h5 {
+.accountDetails .container .accountDetailsForms h5 {
   color: var(--color-theme);
 }
-.accountDetails .container .accountDetailsForms .basicInfo form {
+.accountDetails .container .accountDetailsForms .basicInfo {
   width: 100%;
   display: grid;
   gap: 10px;
   text-align: left;
   grid-template-columns: auto auto;
   grid-template-areas: "firstName lastName" "emailAddress phoneNumber" "bioInfo bioInfo" "btns btns";
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid gray;
 }
-.accountDetails .container .accountDetailsForms .basicInfo form span {
+.accountDetails .container .accountDetailsForms .basicInfo .accountFormBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #firstName {
+  grid-area: firstName;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #lastName {
+  grid-area: lastName;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #emailAddress {
+  grid-area: emailAddress;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #phoneNumber {
+  grid-area: phoneNumber;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #bioInfo {
+  grid-area: bioInfo;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #bioInfo p {
+  margin: 0;
+}
+.accountDetails .container .accountDetailsForms .addressInfo {
+  width: 100%;
+  display: grid;
+  text-align: left;
+  gap: 10px;
+  grid-template-areas: "addressline1 addressline1" "addressline2 addressline2" "postalCode city" "btns btns";
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo .accountFormBox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo .accountFormBox input {
+  width: 100%;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #addressline1 {
+  grid-area: addressline1;
+  margin-right: 5px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #addressline2 {
+  grid-area: addressline2;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #postalCode {
+  grid-area: postalCode;
+  margin-right: 5px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #city {
+  grid-area: city;
+}
+.accountDetails .container .accountDetailsForms span {
   position: relative;
 }
-.accountDetails .container .accountDetailsForms .basicInfo form span.field-validation-error {
+.accountDetails .container .accountDetailsForms span.field-validation-error {
   color: var(--color-danger);
 }
-.accountDetails .container .accountDetailsForms .basicInfo form span.field-validation-error::after {
+.accountDetails .container .accountDetailsForms span.field-validation-error::after {
   position: absolute;
   right: 10px;
   top: -10px;
@@ -514,31 +566,7 @@ a:hover {
   display: block;
   content: "⮿";
 }
-.accountDetails .container .accountDetailsForms .basicInfo form .accountFormBox {
-  display: flex;
-  flex-direction: column;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.accountDetails .container .accountDetailsForms .basicInfo form #firstName {
-  grid-area: firstName;
-}
-.accountDetails .container .accountDetailsForms .basicInfo form #lastName {
-  grid-area: lastName;
-}
-.accountDetails .container .accountDetailsForms .basicInfo form #emailAddress {
-  grid-area: emailAddress;
-}
-.accountDetails .container .accountDetailsForms .basicInfo form #phoneNumber {
-  grid-area: phoneNumber;
-}
-.accountDetails .container .accountDetailsForms .basicInfo form #bioInfo {
-  grid-area: bioInfo;
-}
-.accountDetails .container .accountDetailsForms .basicInfo form #bioInfo p {
-  margin: 0;
-}
-.accountDetails .container .accountDetailsForms .basicInfo .form-btn {
+.accountDetails .container .accountDetailsForms .form-btn {
   grid-area: btns;
   display: flex;
   margin-top: 25px;
@@ -546,72 +574,21 @@ a:hover {
   align-items: center;
 }
 @media (min-width: 768px) {
-  .accountDetails .container .accountDetailsForms .basicInfo .form-btn {
+  .accountDetails .container .accountDetailsForms .form-btn {
     justify-content: left;
     align-items: flex-start;
   }
 }
-.accountDetails .container .accountDetailsForms .basicInfo .form-btn .btn-gray, .accountDetails .container .accountDetailsForms .basicInfo .form-btn .btn-theme {
-  padding: 0;
-  margin: 5px;
-  width: 150px;
-  height: 50px;
-}
-.accountDetails .container .accountDetailsForms .addressInfo {
-  margin-bottom: 25px;
-  padding-bottom: 50px;
-}
-.accountDetails .container .accountDetailsForms .addressInfo h5 {
-  color: var(--color-theme);
-}
-.accountDetails .container .accountDetailsForms .addressInfo form {
-  width: 100%;
-  display: grid;
-  text-align: left;
-  gap: 10px;
-  grid-template-areas: "addressline1 addressline1" "addressline2 addressline2" "postalCode city" "btns btns";
-}
-.accountDetails .container .accountDetailsForms .addressInfo form .accountFormBox {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.accountDetails .container .accountDetailsForms .addressInfo form .accountFormBox input {
-  width: 100%;
-}
-.accountDetails .container .accountDetailsForms .addressInfo form #addressline1 {
-  grid-area: addressline1;
-  margin-right: 5px;
-}
-.accountDetails .container .accountDetailsForms .addressInfo form #addressline2 {
-  grid-area: addressline2;
-}
-.accountDetails .container .accountDetailsForms .addressInfo form #postalCode {
-  grid-area: postalCode;
-  margin-right: 5px;
-}
-.accountDetails .container .accountDetailsForms .addressInfo form #city {
-  grid-area: city;
-}
-.accountDetails .container .accountDetailsForms .addressInfo .form-btn {
-  grid-area: btns;
-  display: flex;
-  margin-top: 25px;
-  justify-content: center;
-  align-items: center;
-}
-@media (min-width: 768px) {
-  .accountDetails .container .accountDetailsForms .addressInfo .form-btn {
-    justify-content: left;
-    align-items: flex-start;
-  }
-}
-.accountDetails .container .accountDetailsForms .addressInfo .form-btn .btn-gray, .accountDetails .container .accountDetailsForms .addressInfo .form-btn .btn-theme {
+.accountDetails .container .accountDetailsForms .form-btn .btn-gray, .accountDetails .container .accountDetailsForms .form-btn .btn-theme {
   padding: 0;
   margin: 5px;
   width: 150px;
   height: 50px;
 }
 
+.accountDetails {
+  width: 100%;
+}
 .accountDetails .container {
   margin-top: 50px;
   display: flex;
@@ -2128,4 +2105,404 @@ main .showcase .container .background-image {
 }
 .workTools .container #evernote-box {
   grid-area: evernote-box;
+}
+
+.courseDescription-contentSection {
+  margin-top: 90px;
+}
+.courseDescription-contentSection .container .content-top {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-top {
+    flex-direction: row;
+  }
+}
+.courseDescription-contentSection .container .content-top .content-top-text {
+  margin-right: 50px;
+}
+.courseDescription-contentSection .container .content-top .content-top-text ul {
+  padding: 0;
+  list-style: none;
+}
+.courseDescription-contentSection .container .content-top .content-top-text ul i {
+  margin-right: 5px;
+  color: var(--color-theme);
+}
+.courseDescription-contentSection .container .content-top .content-top-right {
+  width: 50%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-top .content-top-right {
+    width: 100%;
+  }
+}
+.courseDescription-contentSection .container .content-top .content-top-right i {
+  margin-right: 5px;
+}
+.courseDescription-contentSection .container .content-top .content-top-right .price {
+  display: flex;
+}
+.courseDescription-contentSection .container .content-top .content-top-right .price p {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.courseDescription-contentSection .container .content-mid {
+  margin-top: 100px;
+}
+.courseDescription-contentSection .container .content-mid h1 {
+  margin-bottom: 50px;
+}
+.courseDescription-contentSection .container .content-mid img {
+  margin-right: 20px;
+}
+.courseDescription-contentSection .container .content-mid #content-mid-box {
+  display: flex;
+}
+.courseDescription-contentSection .container .content-mid #content-mid-box-text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.courseDescription-contentSection .container .content-bottom {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-bottom {
+    flex-direction: row;
+  }
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background-color: black;
+  padding: 50px;
+}
+@media (min-width: 992px) {
+  .courseDescription-contentSection .container .content-bottom .content-bottom-text {
+    width: 500px;
+  }
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text h1 {
+  color: white;
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text #yt {
+  background-color: red;
+}
+.courseDescription-contentSection .container .content-bottom .content-bottom-text #fb {
+  background-color: blue;
+}
+
+.courseDescription-showcase {
+  background-color: var(--color-gray-300);
+}
+.courseDescription-showcase .courseDescription-image {
+  width: 100%;
+  height: 500px;
+}
+.courseDescription-showcase .courseDescription-image img {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content {
+  position: absolute;
+  z-index: 2;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top {
+  color: white;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top i {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top a {
+  color: black;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text {
+  display: flex;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text p {
+  padding: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text .best-seller {
+  background-color: #22C55E;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-top-text .digital {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content h1, .courseDescription-showcase .container .courseDescription-showcase-content p {
+  color: white;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .rating {
+  display: flex;
+  flex-direction: row;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .rating i {
+  margin-right: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .rating p {
+  margin-right: 20px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info {
+  display: flex;
+  align-items: center;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info p {
+  margin-bottom: 5px;
+}
+.courseDescription-showcase .container .courseDescription-showcase-content .courseDescription-showcase-rating .creator-info .creator-text {
+  margin-left: 20px;
+}
+
+.readyTo-section .container {
+  display: flex;
+  flex-direction: row;
+}
+.readyTo-section .container .readyTo-content {
+  flex-direction: column;
+}
+
+.courses-showcase .container {
+  display: flex;
+  flex-direction: column;
+}
+.courses-showcase .container .courses-showcase-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 50px;
+}
+@media (min-width: 768px) {
+  .courses-showcase .container .courses-showcase-top {
+    flex-direction: row;
+  }
+}
+@media (max-width: 992px) {
+  .courses-showcase .container .courses-showcase-top {
+    flex-direction: column;
+  }
+}
+.courses-showcase .container .courses-showcase-top .top-text {
+  justify-content: center;
+}
+.courses-showcase .container .courses-showcase-top .top-text .breadcrumb {
+  display: flex;
+  margin-bottom: 50px;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .courses-showcase .container .courses-showcase-top .top-text .breadcrumb {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+.courses-showcase .container .courses-showcase-top .top-text .breadcrumb a {
+  display: inline-block;
+  text-decoration: none;
+  margin-right: 10px;
+  position: relative;
+}
+.courses-showcase .container .courses-showcase-top .top-text .breadcrumb a.active {
+  font-weight: 500;
+}
+.courses-showcase .container .courses-showcase-top .top-text .breadcrumb a.active::after, .courses-showcase .container .courses-showcase-top .top-text .breadcrumb a:hover::after {
+  content: "";
+  position: absolute;
+  font-weight: 500;
+  height: 2px;
+  width: 15px;
+  background-color: #191919;
+  left: 50%;
+  bottom: -3px;
+  transform: translate(calc(50% - 15px));
+}
+.courses-showcase .container .courses-showcase-top .top-text .breadcrumb li i {
+  margin-right: 5px;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 992px) {
+  .courses-showcase .container .courses-showcase-top .courses-showcase-search {
+    margin-right: auto;
+  }
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .select {
+  width: 200px;
+  height: 46px;
+  position: relative;
+  margin-right: 5px;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .select i {
+  position: absolute;
+  top: 17px;
+  right: 10px;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .select .selected {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .select .select-options {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+  background-color: var(--color-gray-600);
+  color: var(--color-gray-000);
+  border-radius: 5px;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .select .select-options .option:hover {
+  background-color: var(--color-theme-s);
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .input-search-group {
+  position: relative;
+  display: flex;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .input-search-group input {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.courses-showcase .container .courses-showcase-top .courses-showcase-search .input-search-group i {
+  color: var(--color-gray-500);
+  position: absolute;
+  top: 18px;
+  right: 8px;
+}
+.courses-showcase .container .courses-showcase-content {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+@media (min-width: 992px) {
+  .courses-showcase .container .courses-showcase-content {
+    grid-template-columns: auto auto auto;
+  }
+}
+.courses-showcase .container .courses-showcase-content .courses-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  border-radius: 2%;
+  box-shadow: var(--box-theme-s-shadow);
+}
+.courses-showcase .container .courses-showcase-content .courses-box img {
+  width: 100%;
+}
+.courses-showcase .container .courses-showcase-content .courses-box form {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  align-items: flex-end;
+}
+.courses-showcase .container .courses-showcase-content .courses-box form button {
+  width: 35px;
+  height: 35px;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  border-radius: 25px;
+  border: 1px solid var(--color-gray-400);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.courses-showcase .container .courses-showcase-content .courses-box form button:hover {
+  background-color: var(--color-gray-800);
+  color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-100);
+}
+.courses-showcase .container .courses-showcase-content .courses-box .courses-box-top {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.courses-showcase .container .courses-showcase-content .courses-box .courses-box-top p {
+  align-self: flex-start;
+  background-color: rgb(18, 196, 18);
+  padding: 5px;
+}
+.courses-showcase .container .courses-showcase-content .courses-box .courses-text {
+  height: 120px;
+}
+@media (min-width: 768px) {
+  .courses-showcase .container .courses-showcase-content .courses-box .courses-text {
+    height: 100px;
+  }
+}
+.courses-showcase .container .courses-showcase-content .courses-box .prices {
+  display: flex;
+  color: var(--color-theme);
+}
+.courses-showcase .container .courses-showcase-content .courses-box .prices p {
+  margin-right: 20px;
+  margin-top: 10px;
+}
+.courses-showcase .container .courses-showcase-content .courses-box .hour-rating {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid gray;
+}
+.courses-showcase .container .courses-showcase-content .courses-box .hour-rating p {
+  margin-right: 20px;
+  margin-top: 10px;
+}
+.courses-showcase .container .courses-showcase-content .courses-box .hour-rating p i {
+  margin-right: 5px;
+}
+.courses-showcase .container .courses-slide-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.courses-showcase .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+.courses-showcase .pagination span {
+  padding: 20px;
+  margin: 5px;
 }

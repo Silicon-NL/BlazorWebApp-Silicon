@@ -70,5 +70,25 @@
   {
     "outputFile": "wwwroot/js/site.es5.js",
     "inputFile": "wwwroot/js/site.js"
+  },
+  {
+    "outputFile": "Components/Sections/Course-Showcase.razor.css",
+    "inputFile": "Components/Sections/Course-Showcase.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/Course-ReadyToSection.razor.css",
+    "inputFile": "Components/Sections/Course-ReadyToSection.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/CourseDetails-Showcase.razor.css",
+    "inputFile": "Components/Sections/CourseDetails-Showcase.razor.scss"
+  },
+  {
+    "outputFile": "Components/Sections/CourseDetails-ContentSection.razor.css",
+    "inputFile": "Components/Sections/CourseDetails-ContentSection.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/Manage/Index.razor.css",
+    "inputFile": "Components/Account/Pages/Manage/Index.razor.scss"
   }
 ]

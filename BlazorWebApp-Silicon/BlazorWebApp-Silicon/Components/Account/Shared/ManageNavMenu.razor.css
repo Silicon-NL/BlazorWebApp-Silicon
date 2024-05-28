@@ -1,4 +1,7 @@
-﻿.accountDetails .container {
+﻿.accountDetails {
+  width: 100%;
+}
+.accountDetails .container {
   margin-top: 50px;
   display: flex;
   flex-direction: column;

@@ -1,0 +1,52 @@
+﻿@* <section class="courseDescription-showcase">
+
+    <div class="container">
+        <div class="courseDescription-showcase-content">
+
+            <div class="courseDescription-showcase-top">
+                <div class="top-text">
+                    <ul class="breadcrumb">
+                        <li><i class="fa-solid fa-house"></i><a href="index.html">Home</a></li>
+                        <li class="active"><i class="fa-solid fa-angles-right"></i>Courses</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="courseDescription-showcase-top-text">
+                @if (Model.IsBestSeller)
+                {
+                    <p class="best-seller">Best Seller</p>
+                }
+                <p class="digital">Digital</p>
+            </div>
+
+            <h1>@Model.Title</h1>
+            <p>Egestas feugiat lorem eu neque suspendisse ullamcorper scelerisque aliquam mauris.</p>
+            <div class="courseDescription-showcase-rating">
+                <div class="rating">
+                    <p><i class="fa-solid fa-star" style="color: #FFD43B;"></i>(@Model.LikesInNumber K reviews)</p>
+                    <p><i class="fa-solid fa-thumbs-up"></i>@Model.LikesInNumber K likes</p>
+                    <p><i class="fa-regular fa-clock"></i>@Model.Hours hours</p>
+                </div>
+
+                <div class="creator-info">
+                    <img src="~/images/courseDescription-Creator-image.svg" alt="">
+                    <div class="creator-text">
+                        <p>Created by</p>
+                        <p>@Model.Author</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="courseDescription-image">
+        <img src="~/images/@Model.ImgUrl" alt="">
+    </div>
+</section>
+
+
+@code {
+
+}
+ *@

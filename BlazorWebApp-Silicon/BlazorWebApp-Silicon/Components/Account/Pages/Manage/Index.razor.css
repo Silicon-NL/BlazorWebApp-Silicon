@@ -1,0 +1,123 @@
+﻿@charset "UTF-8";
+.accountDetails .container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 992px) {
+  .accountDetails .container {
+    justify-content: left;
+    flex-direction: row;
+  }
+}
+.accountDetails .container .accountDetailsForms {
+  width: 100%;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .accountDetails .container .accountDetailsForms {
+    text-align: left;
+  }
+}
+.accountDetails .container .accountDetailsForms h5 {
+  color: var(--color-theme);
+}
+.accountDetails .container .accountDetailsForms .basicInfo {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  grid-template-columns: auto auto;
+  grid-template-areas: "firstName lastName" "emailAddress phoneNumber" "bioInfo bioInfo" "btns btns";
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid gray;
+}
+.accountDetails .container .accountDetailsForms .basicInfo .accountFormBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #firstName {
+  grid-area: firstName;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #lastName {
+  grid-area: lastName;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #emailAddress {
+  grid-area: emailAddress;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #phoneNumber {
+  grid-area: phoneNumber;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #bioInfo {
+  grid-area: bioInfo;
+}
+.accountDetails .container .accountDetailsForms .basicInfo #bioInfo p {
+  margin: 0;
+}
+.accountDetails .container .accountDetailsForms .addressInfo {
+  width: 100%;
+  display: grid;
+  text-align: left;
+  gap: 10px;
+  grid-template-areas: "addressline1 addressline1" "addressline2 addressline2" "postalCode city" "btns btns";
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo .accountFormBox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo .accountFormBox input {
+  width: 100%;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #addressline1 {
+  grid-area: addressline1;
+  margin-right: 5px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #addressline2 {
+  grid-area: addressline2;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #postalCode {
+  grid-area: postalCode;
+  margin-right: 5px;
+}
+.accountDetails .container .accountDetailsForms .addressInfo #city {
+  grid-area: city;
+}
+.accountDetails .container .accountDetailsForms span {
+  position: relative;
+}
+.accountDetails .container .accountDetailsForms span.field-validation-error {
+  color: var(--color-danger);
+}
+.accountDetails .container .accountDetailsForms span.field-validation-error::after {
+  position: absolute;
+  right: 10px;
+  top: -10px;
+  z-index: 10;
+  font-size: 2em;
+  display: block;
+  content: "⮿";
+}
+.accountDetails .container .accountDetailsForms .form-btn {
+  grid-area: btns;
+  display: flex;
+  margin-top: 25px;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .accountDetails .container .accountDetailsForms .form-btn {
+    justify-content: left;
+    align-items: flex-start;
+  }
+}
+.accountDetails .container .accountDetailsForms .form-btn .btn-gray, .accountDetails .container .accountDetailsForms .form-btn .btn-theme {
+  padding: 0;
+  margin: 5px;
+  width: 150px;
+  height: 50px;
+}

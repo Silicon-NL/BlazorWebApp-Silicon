@@ -18,7 +18,7 @@
                         </form>
                         <img src="/images/profile-header.svg" alt="profile image">
                     </div>
-                    <h5>@user.UserProfile?.FirstName @user.UserProfile?.LastName</h5>
+                    <h5>@user.UserProfile.FirstName @user.UserProfile.LastName</h5>
                     <p>@user.Email</p>
                 }
 
@@ -77,6 +77,7 @@
         if (email != null)
         {
             user = await UserManager.FindByEmailAsync(email);
+            var userProfile = DbContext.AspNetUserProfiles.FirstOrDefault(x => x.Id == user.ApplicationUserProfileId);
         }
 
         hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
