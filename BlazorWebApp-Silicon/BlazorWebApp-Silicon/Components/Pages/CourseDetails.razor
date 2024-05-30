@@ -1,11 +1,244 @@
-﻿@page "/courses{course.id}"
+﻿@page "/CourseDetails/{CourseId}"
+@using System.Text.Json
 
 <PageTitle>Course details</PageTitle>
 
-<BlazorWebApp_Silicon.Components.Sections.CourseDetails_Showcase />
+@if (course != null)
+{
+    <section class="courseDescription-showcase">
 
-<BlazorWebApp_Silicon.Components.Sections.CourseDetails_ContentSection />
+        <div class="container">
+            <div class="courseDescription-showcase-content">
+
+                <div class="courseDescription-showcase-top">
+                    <div class="top-text">
+                        <ul class="breadcrumb">
+                            <li><i class="fa-solid fa-house"></i><a href="/">Home</a></li>
+                            <li class="active"><i class="fa-solid fa-angles-right"></i>Courses</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="courseDescription-showcase-top-text">
+                    @if (course.IsBestSeller)
+                    {
+                        <p class="best-seller">Best Seller</p>
+                    }
+                    <p class="digital">Digital</p>
+                </div>
+
+                <h1>@course.Title</h1>
+                <p>Egestas feugiat lorem eu neque suspendisse ullamcorper scelerisque aliquam mauris.</p>
+                <div class="courseDescription-showcase-rating">
+                    <div class="rating">
+                        <p><i class="fa-solid fa-star" style="color: #FFD43B;"></i>(@course.Likes K reviews)</p>
+                        <p><i class="fa-solid fa-thumbs-up"></i>@course.Likes K likes</p>
+                        <p><i class="fa-regular fa-clock"></i>@course.Hours hours</p>
+                    </div>
+
+                    <div class="creator-info">
+                        <img src="/images/courseDescription-Creator-image.svg" alt="">
+                        <div class="creator-text">
+                            <p>Created by</p>
+                            <p>@course.Author</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="courseDescription-image">
+            <img src="@course.ImageHeaderUri" alt="">
+        </div>
+    </section>
+
+    <section class="courseDescription-contentSection">
+        <div class="container">
+            <div class="content-top">
+                <div class="content-top-text">
+                    <h1>Course Description</h1>
+                    <p>Suspendisse natoque sagittis, consequat turpis. Sed tristique tellus morbi magna. At vel senectus accumsan, arcu mattis id tempor. Tellus sagittis, euismod porttitor sed tortor est id. Feugiat velit velit, tortor ut. Ut libero cursus nibh lorem urna amet tristique leo. Viverra lorem arcu nam nunc at ipsum quam. A proin id sagittis dignissim mauris condimentum ornare. Tempus mauris sed dictum ultrices.</p>
+                    <h4>What you'll learn</h4>
+                    <ul>
+                        <li><i class="fa-regular fa-square-check"></i>Sed lectus donec amet eu turpis interdum.</li>
+                        <li><i class="fa-regular fa-square-check"></i>Nulla at consectetur vitae dignissim porttitor.</li>
+                        <li><i class="fa-regular fa-square-check"></i>Phasellus id vitae dui aliquet mi.</li>
+                        <li><i class="fa-regular fa-square-check"></i>Integer cursus vitae, odio feugiat iaculis aliquet diam, et purus.</li>
+                        <li><i class="fa-regular fa-square-check"></i>In aenean dolor diam tortor orci eu.</li>
+                    </ul>
+                </div>
+
+                <div class="content-top-right">
+                    <h6>This course includes:</h6>
+                    <p><i class="fa-solid fa-tv"></i>@course.Hours hours on-demand video</p>
+                    <p><i class="fa-regular fa-newspaper"></i>18 articles</p>
+                    <p><i class="fa-solid fa-download"></i>25 downloadable resources</p>
+                    <p><i class="fa-solid fa-8 fa-rotate-90"></i>Full lifetime access</p>
+                    <p><i class="fa-solid fa-trophy"></i>Certificate of completion</p>
+                    @if (course.DiscountPrice != null)
+                    {
+                        <div class="price">
+                            <p>@course.DiscountPrice</p>
+                            <p><s>@course.Price</s></p>
+                        </div>
+                    }
+                    <div class="price">
+                        <p>@course.Price</p>
+                    </div>
+                    <form method="post" asp-action="SavedItems" asp-controller="Account">
+                        <input type="hidden" name="courseId" value="@course.Id" />
+                        <button type="submit" class="btn-theme">Join course</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="content-mid">
+                <h1>Program Details</h1>
+                <div id="content-mid-box">
+                    <img src="/images/1.svg" alt="">
+                    <div id="content-mid-box-text">
+                        <h4>Introduction. Getting started</h4>
+                        <p>Nulla faucibus mauris pellentesque blandit faucibus non. Sit ut et at suspendisse gravida hendrerit tempus placerat.</p>
+                    </div>
+                </div>
+
+                <div id="content-mid-box">
+                    <img src="/images/2.svg" alt="">
+                    <div id="content-mid-box-text">
+                        <h4>The ultimate HTML developer: advanced HTML</h4>
+                        <p>Lobortis diam elit id nibh ultrices sed penatibus donec. Nibh iaculis eu sit cras ultricies. Nam eu eget etiam egestas donec scelerisque ut ac enim. Vitae ac nisl, enim nec accumsan vitae est.</p>
+                    </div>
+                </div>
+
+                <div id="content-mid-box">
+                    <img src="/images/3.svg" alt="">
+                    <div id="content-mid-box-text">
+                        <h4>CSS & CSS3: basic</h4>
+                        <p>Duis euismod enim, facilisis risus tellus pharetra lectus diam neque. Nec ultrices mi faucibus est. Magna ullamcorper potenti elementum ultricies auctor nec volutpat augue.</p>
+                    </div>
+                </div>
+
+                <div id="content-mid-box">
+                    <img src="/images/4.svg" alt="">
+                    <div id="content-mid-box-text">
+                        <h4>JavaScript basics for beginners</h4>
+                        <p>Morbi porttitor risus imperdiet a, nisl mattis. Amet, faucibus eget in platea vitae, velit, erat eget velit. At lacus ut proin erat.</p>
+                    </div>
+                </div>
+
+                <div id="content-mid-box">
+                    <img src="/images/5.svg" alt="">
+                    <div id="content-mid-box-text">
+                        <h4>Understanding APIs</h4>
+                        <p>Risus morbi euismod in congue scelerisque fusce pellentesque diam consequat. Nisi mauris nibh sed est morbi amet arcu urna. Malesuada feugiat quisque consectetur elementum diam vitae. Dictumst facilisis odio eu quis maecenas risus odio fames bibendum.</p>
+                    </div>
+                </div>
+
+                <div id="content-mid-box">
+                    <img src="/images/6.svg" alt="">
+                    <div id="content-mid-box-text">
+                        <h4>C# and .NET from beginner to advanced</h4>
+                        <p>Quis risus quisque diam diam. Volutpat neque eget eu faucibus sed urna fermentum risus. Est, mauris morbi nibh massa.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="content-bottom">
+                <img src="/images/coursedescription-creator-img.svg" alt="">
+                <div class="content-bottom-text">
+                    <p>Learn from the best</p>
+                    <h1>@course.Author</h1>
+                    <p>Dolor ipsum amet cursus quisque porta adipiscing. Lorem convallis malesuada sed maecenas. Ac dui at vitae mauris cursus in nullam porta sem. Quis pellentesque elementum ac bibendum. Nunc aliquam in tortor facilisis. Vulputate eget risus, metus phasellus. Pellentesque faucibus amet, eleifend diam quam condimentum convallis ultricies placerat. Duis habitasse placerat amet, odio pellentesque rhoncus, feugiat at. Eget pellentesque tristique felis magna fringilla.</p>
+                    <button id="yt" class="btn-theme"><i class="fa-brands fa-youtube"></i>240k subscribers</button>
+                    <button id="fb" class="btn-theme"><i class="fa-brands fa-facebook"></i>240k subscribers</button>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
 
 @code {
 
+    [Parameter]
+    public string CourseId { get; set; }
+
+    private CourseCardModel course;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = new GraphQLQuery
+            {
+                Query = "{ getCourses { id title isBestSeller imageUri isDigital categories ingress starRating reviews likesInProcent likes hours authors { name } prices { currency price discount } content { description includes } } }"
+            };
+
+        var response = await Http.PostAsJsonAsync("https://courseprovider-silicon-nl.azurewebsites.net/api/graphql?code=BjXYslY76lPRzAeYp0FsiAxcYtip4Z7sX2yeweYb9nBGAzFufiglzw%3D%3D", query);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(jsonResponse);
+
+            var result = JsonSerializer.Deserialize<DynamicGraphQLResponse>(jsonResponse);
+
+            if (result != null && result.Data.TryGetProperty("getCourses", out JsonElement coursesElement) && coursesElement.ValueKind != JsonValueKind.Undefined)
+            {
+                course = new CourseCardModel();
+
+                foreach (var course in coursesElement.EnumerateArray())
+                {
+                    try
+                    {
+                        var courseModel = new CourseCardModel
+                            {
+                                Id = course.GetProperty("id").GetString(),
+                                Title = course.GetProperty("title").GetString(),
+                                IsBestSeller = course.GetProperty("isBestSeller").GetBoolean(),
+                                IsDigital = course.GetProperty("isDigital").GetBoolean(),
+                                ImageUri = course.GetProperty("imageUri").GetString(),
+                                ImageHeaderUri = course.GetProperty("imageUri").GetString(),
+                                Categories = JsonSerializer.Deserialize<string[]>(course.GetProperty("categories").GetRawText()),
+                                Ingress = course.GetProperty("ingress").GetString(),
+                                StarRating = course.GetProperty("starRating").GetDecimal(),
+                                Reviews = course.GetProperty("reviews").GetString(),
+                                LikesInProcent = course.GetProperty("likesInProcent").GetString(),
+                                Likes = course.GetProperty("likes").GetString(),
+                                Hours = course.GetProperty("hours").GetString(),
+                                Author = course.GetProperty("authors")[0].GetProperty("name").GetString(),
+                                Price = $"{course.GetProperty("prices").GetProperty("currency").GetString()} {course.GetProperty("prices").GetProperty("price").GetDouble()}",
+                                DiscountPrice = course.GetProperty("prices").GetProperty("discount").GetDouble() > 0
+                                            ? $"{course.GetProperty("prices").GetProperty("currency").GetString()} {course.GetProperty("prices").GetProperty("price").GetDouble() - course.GetProperty("prices").GetProperty("discount").GetDouble()}"
+                                            : null,
+                                IsVisible = true
+                            };
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error processing course: {ex.Message}");
+                    }
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Error: {response.StatusCode}");
+        }
+    }
+
+    private CourseCardModel GetCourseDetails(string courseId)
+    {
+        // Implementera en metod för att hämta kursinformation baserat på courseId
+        // Exempel:
+        return new CourseCardModel
+            {
+                Id = courseId,
+                Title = "Course Title",
+                Author = "Author Name",
+                // Content = "Course Description"
+                // Lägg till fler detaljer här
+            };
+    }
 }

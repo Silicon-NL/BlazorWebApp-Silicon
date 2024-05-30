@@ -26,4 +26,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\BlazorWebApp-Silicon.Bussiness\BlazorWebApp-Silicon.Bussiness.csproj" />
+  </ItemGroup>
+
 </Project>
