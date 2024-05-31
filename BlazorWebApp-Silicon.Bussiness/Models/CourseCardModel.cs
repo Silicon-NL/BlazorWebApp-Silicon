@@ -10,6 +10,7 @@ public class CourseCardModel
     public string? Author { get; set; }
     public string? Price { get; set; }
     public string? DiscountPrice { get; set; }
+    public string? Currency { get; set; }
     public string[]? Categories { get; set; }
     public string? Title { get; set; }
     public string? Ingress { get; set; }
@@ -19,4 +20,27 @@ public class CourseCardModel
     public string? Likes { get; set; }
     public string? Hours { get; set; }
     public bool IsVisible { get; set; } = true;
+    public string? Content { get; set; }
+    public string[]? Includes { get; set; }
+    public ProgramDetail[]? ProgramDetails { get; set; }
+
+    public string ToQueryString()
+    {
+        return $"Id={Id}" +
+               $"&BestSeller={IsBestSeller}" +
+               $"&ImageUri={Uri.EscapeDataString(ImageUri)}" +
+               $"&Title={Uri.EscapeDataString(Title)}" +
+               $"&Description={Uri.EscapeDataString(Ingress)}" +
+               $"&Author={Uri.EscapeDataString(Author)}" +
+               $"&Likes={Likes}" +
+               $"&LikesInPercent={LikesInProcent}" +
+               $"&Price={Price}";
+    }
+}
+
+public class ProgramDetail
+{
+    public int? Id { get; set; }
+    public string? Title { get; set; }
+    public string? Description { get; set; }
 }

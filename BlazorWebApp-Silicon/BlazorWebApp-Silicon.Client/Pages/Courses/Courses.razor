@@ -49,8 +49,8 @@
 
                 @foreach (var course in courses.Where(c => c.IsVisible))
                 {
-                    var link = $"/CourseDetails/{course.Id}";
-                    <a class="course" href="@link" asp-route-id="@course.Id">
+
+                    <a class="course" href="@($"/CourseDetails/{course.Id}")">
                         <div class="courses-box">
 
                             <div class="courses-box-top">
@@ -60,7 +60,7 @@
                                 }
                             </div>
 
-                            <form method="post" asp-action="SavedItems" asp-controller="Account">
+                            <form method="post" action="/Account/SavedItems">
                                 <input type="hidden" name="courseId" value="@course.Id" />
                                 <button type="submit"><i class="fa-regular fa-bookmark"></i></button>
                             </form>

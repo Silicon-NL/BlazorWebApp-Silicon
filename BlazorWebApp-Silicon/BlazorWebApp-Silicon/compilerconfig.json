@@ -98,5 +98,9 @@
   {
     "outputFile": "Components/Pages/CourseDetails.razor.css",
     "inputFile": "Components/Pages/CourseDetails.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/SavedItems.razor.css",
+    "inputFile": "Components/Account/Pages/SavedItems.razor.scss"
   }
 ]
