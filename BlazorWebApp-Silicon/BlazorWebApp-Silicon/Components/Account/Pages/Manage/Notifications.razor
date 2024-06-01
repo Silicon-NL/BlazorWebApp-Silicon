@@ -2,62 +2,74 @@
 
 <section class="notificationSection">
     <h3>Notifications</h3>
-    <EditForm FormName="accountNotifications" Model="accountNotifications" OnInvalidSubmit="OnValidSubmitAsync" method="post" novalidate>
+    <EditForm FormName="accountNotificationsForm" Model="accountNotifications" OnValidSubmit="OnValidSubmitAsync" method="post" novalidate>
 
-    
-    <div class="email-notification">
-        <label>Preferred email for notifications</label>
-        <InputText class="email-notification-input" @bind-Value="accountNotifications.NotificationEmail" placeholder="example@gmail.com" />
-    </div>
+        <div class="email-notification">
+            <label>Preferred email for notifications</label>
+            <InputText class="email-notification-input" @bind-Value="accountNotifications.NotificationEmail" placeholder="example@gmail.com" />
+        </div>
 
         <div class="btn-switch subscribeNewsletter">
-      
             <label class="switch" for="switch-mode">
-                <input type="checkbox" id="switch-mode" />
+                <InputCheckbox @bind-Value="accountNotifications.NewsletterSubscribe" @onchange="SubscriberSwitch"/>
                 <div class="slider round"></div>
             </label>
-                <div class="subscribeNewsletterText">
-                    <label>Subscribe to Newsletter</label>
-                    <p>Nec, posuere non felis duis massa vitae aliquet interdum scelerisque. Neque ullamcorper.</p>
-                </div>
-            
+            <div class="subscribeNewsletterText">
+                <label>Subscribe to Newsletter</label>
+                <p>Nec, posuere non felis duis massa vitae aliquet interdum scelerisque. Neque ullamcorper.</p>
+            </div>
         </div>
 
         <div class="btn-switch DarkMode">
-
             <label class="switch" for="switch-mode">
-                <input type="checkbox" id="switch-mode" />
+                <InputCheckbox @bind-Value="accountNotifications.DarkMode" />
                 <div class="slider round"></div>
             </label>
-
-                <div class="DarkModeText">
-                    <label>Use Dark Mode Theme in Application</label>
-                    <p>Tortor massa porttitor enim tristique neque fermentum sed.</p>
-                </div>
+            <div class="DarkModeText">
+                <label>Use Dark Mode Theme in Application</label>
+                <p>Tortor massa porttitor enim tristique neque fermentum sed.</p>
+            </div>
         </div>
 
         <div class="form-btn">
             <button class="btn-gray" type="reset">Cancel</button>
-            <button class="btn-theme" type="submit">Change password</button>
+            <button class="btn-theme" type="submit">Save changes</button>
         </div>
     </EditForm>
 </section>
 
-
-
-
 @code {
+    [SupplyParameterFromForm(FormName = "accountNotificationsForm")]
     private AccountNotifications accountNotifications { get; set; } = new AccountNotifications();
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
 
     private async Task OnValidSubmitAsync()
     {
+        var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
+        if (accountNotifications.NewsletterSubscribe)
+        {
+            var email = !string.IsNullOrEmpty(accountNotifications.NotificationEmail) ? accountNotifications.NotificationEmail : user.Email;
+            await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe", user.Email);
+        }
+        else
+        {
+            await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/UnSubscribe", user.Email);
+        }
     }
+
+    private void SubscriberSwitch()
+    {
+        accountNotifications.NewsletterSubscribe = true;
+    }
+
     private class AccountNotifications
     {
         public string? NotificationEmail { get; set; }
-        public bool? NewsletterSubscribe { get; set; }
-        public bool? DarkMode { get; set; }
+        public bool NewsletterSubscribe { get; set; }
+        public bool DarkMode { get; set; }
     }
-
 }

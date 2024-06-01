@@ -1,0 +1,31 @@
+﻿@page "/Account/Pages/logout"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+<section class="logOutSection">
+    <div class="container">
+        <h1>Du har loggats ut</h1>
+
+        <p>Tack för att du använde vår tjänst. Du har nu loggats ut från ditt konto.</p>
+
+        <p>
+            <a class="btn-theme" href="/Account/Login">Logga in igen</a>
+        </p>
+    </div>
+
+</section>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            await SignInManager.SignOutAsync();
+        }
+    }
+}

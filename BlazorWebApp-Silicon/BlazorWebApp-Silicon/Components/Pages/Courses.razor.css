@@ -140,6 +140,7 @@
   width: 100%;
 }
 .courses-showcase .container .courses-showcase-content .courses-box form {
+  z-index: 9999;
   position: absolute;
   top: 10px;
   right: 25px;

@@ -1,0 +1,23 @@
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Components.Authorization;
+@using System.Security.Claims;
+@using System.Threading.Tasks;
+
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@rendermode InteractiveServer
+<button @onclick="ConfirmLogout" class="btn btn-danger">Sign Out</button>
+
+@code {
+    private async Task ConfirmLogout()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/Account/Pages/logout", forceLoad: true);
+        }
+    }
+}

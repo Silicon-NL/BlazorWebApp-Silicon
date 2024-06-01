@@ -3,7 +3,7 @@
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@inject NavigationManager Navigation
 
 <section class="accountDetails">
     <div class="container">
@@ -39,7 +39,7 @@
                     </li>
                     <li class="nav-item">
 
-                        <NavLink class="menu-link" href="Account/SavedItems">Saved Items</NavLink>
+                        <NavLink class="menu-link" href="Account/Manage/SavedItems">Saved Items</NavLink>
                     </li>
                     @if (hasExternalLogins)
                     {
@@ -54,9 +54,9 @@
                         <NavLink class="menu-link" href="Account/Manage/PersonalData">Personal data</NavLink>
                     </li>
                     <li class="nav-item">
-
-                        <NavLink class="menu-link" href="Account/Manage/SignOut">Sign Out</NavLink>
+                        <BlazorWebApp_Silicon.Client.Pages.Account.SignOut />
                     </li>
+
                 </ul>
             </div>
             <nav>
@@ -67,10 +67,10 @@
 </section>
 
 
+
 @code {
     private ApplicationUser? user;
     private bool hasExternalLogins;
-
     protected override async Task OnInitializedAsync()
     {
         var email = SignInManager.Context.User?.Identity?.Name;

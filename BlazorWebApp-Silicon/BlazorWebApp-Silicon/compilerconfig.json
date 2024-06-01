@@ -102,5 +102,9 @@
   {
     "outputFile": "Components/Account/Pages/SavedItems.razor.css",
     "inputFile": "Components/Account/Pages/SavedItems.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/LogOut.razor.css",
+    "inputFile": "Components/Account/Pages/LogOut.razor.scss"
   }
 ]

@@ -1,6 +1,4 @@
 ﻿@using System.Text.Json
-@using BlazorWebApp_Silicon.Bussiness.Models
-
 @rendermode InteractiveServer
 
 @attribute [StreamRendering]
@@ -60,7 +58,7 @@
                                 }
                             </div>
 
-                            <form method="post" action="/Account/SavedItems">
+                            <form class="savedItemsForm" method="post" ="/SavedItems">
                                 <input type="hidden" name="courseId" value="@course.Id" />
                                 <button type="submit"><i class="fa-regular fa-bookmark"></i></button>
                             </form>
@@ -214,4 +212,6 @@
             }
         }
     }
+
+
 }

@@ -104,3 +104,68 @@
 .accountDetails .container .profileInfo a i {
   margin-right: 5px;
 }
+
+.signOut {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+.signOut .signOut {
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+}
+.signOut .signOut .signOut-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: animatezoom 0.6s;
+}
+.signOut .signOut .signOut-content .signOut-header, .signOut .signOut .signOut-content .signOut-footer {
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ddd;
+}
+.signOut .signOut .signOut-content .signOut-header h5, .signOut .signOut .signOut-content .signOut-footer h5 {
+  margin: 0;
+}
+.signOut .signOut .signOut-content .signOut-footer {
+  border-top: 1px solid #ddd;
+  text-align: right;
+}
+.signOut .signOut .signOut-content .signOut-body {
+  padding: 20px;
+}
+.signOut .signOut .signOut-content .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.signOut .signOut .signOut-content .close:hover, .signOut .signOut .signOut-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
