@@ -1,9 +1,9 @@
 ﻿@page "/Account/Manage/Notifications"
+@using Newtonsoft.Json
 
 <section class="notificationSection">
     <h3>Notifications</h3>
     <EditForm FormName="accountNotificationsForm" Model="accountNotifications" OnValidSubmit="OnValidSubmitAsync" method="post" novalidate>
-
         <div class="email-notification">
             <label>Preferred email for notifications</label>
             <InputText class="email-notification-input" @bind-Value="accountNotifications.NotificationEmail" placeholder="example@gmail.com" />
@@ -11,7 +11,7 @@
 
         <div class="btn-switch subscribeNewsletter">
             <label class="switch" for="switch-mode">
-                <InputCheckbox @bind-Value="accountNotifications.NewsletterSubscribe" @onchange="SubscriberSwitch"/>
+                <InputCheckbox type="checkbox" id="switch-mode" @bind-Value="@accountNotifications.NewsletterSubscribe" />
                 <div class="slider round"></div>
             </label>
             <div class="subscribeNewsletterText">
@@ -22,7 +22,7 @@
 
         <div class="btn-switch DarkMode">
             <label class="switch" for="switch-mode">
-                <InputCheckbox @bind-Value="accountNotifications.DarkMode" />
+                <InputCheckbox type="checkbox" id="switch-mode" @bind-Value="@accountNotifications.DarkMode" />
                 <div class="slider round"></div>
             </label>
             <div class="DarkModeText">
@@ -45,25 +45,46 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-
-    private async Task OnValidSubmitAsync()
+    protected override async Task OnInitializedAsync()
     {
         var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        var email = !string.IsNullOrEmpty(accountNotifications.NotificationEmail) ? accountNotifications.NotificationEmail : user.Email;
 
-        if (accountNotifications.NewsletterSubscribe)
+        var result = await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe?code=OFbaYcV1zykt05NiLzTls1lv6Tkx3oiFvkB8velll2WkAzFu0jYaew%3D%3D", new { email });
+        if (result.IsSuccessStatusCode)
         {
-            var email = !string.IsNullOrEmpty(accountNotifications.NotificationEmail) ? accountNotifications.NotificationEmail : user.Email;
-            await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe", user.Email);
+            accountNotifications.NewsletterSubscribe = true;
         }
         else
         {
-            await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/UnSubscribe", user.Email);
+            accountNotifications.NewsletterSubscribe = false;
         }
     }
 
-    private void SubscriberSwitch()
+    private async Task OnValidSubmitAsync()
     {
-        accountNotifications.NewsletterSubscribe = true;
+
+        var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+
+        var email = !string.IsNullOrEmpty(accountNotifications.NotificationEmail) ? accountNotifications.NotificationEmail : user.Email;
+
+        if (accountNotifications.NewsletterSubscribe)
+        {
+
+            var result = await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/Subscribe?code=OFbaYcV1zykt05NiLzTls1lv6Tkx3oiFvkB8velll2WkAzFu0jYaew%3D%3D", new { email } );
+            if (result.IsSuccessStatusCode)
+            {
+                accountNotifications.NewsletterSubscribe = true;
+            }
+        }
+        else
+        {
+            var result = await Http.PostAsJsonAsync("https://newsletterprovider-silicon-nl.azurewebsites.net/api/UnSubscribe?code=z2cL0z88qeysobVV6I9YRF6x_a7uF-6CEiGllF9fM4_MAzFuExayDA%3D%3D", new { email });
+            if (result.IsSuccessStatusCode)
+            {
+                accountNotifications.NewsletterSubscribe = false;
+            }
+        }
     }
 
     private class AccountNotifications
