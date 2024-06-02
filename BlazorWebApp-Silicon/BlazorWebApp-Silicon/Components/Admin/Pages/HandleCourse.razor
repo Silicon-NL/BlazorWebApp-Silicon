@@ -1,0 +1,282 @@
+﻿@page "/HandleCourse/{CourseId}"
+@using System.Text.Json
+
+<section class="HandleCourse">
+
+    <BlazorWebApp_Silicon.Components.Account.Shared.StatusMessage Message="@statusMessage" />
+
+    <div class="container">
+        <h3>HandleCourse</h3>
+        <EditForm class="courseCardModelForm" FormName="courseCardModelForm" Model="courseCardModel" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            @if (courseCardModel != null)
+            {
+                <div class="CourseModelBox">
+                    <label>Id</label>
+                    <InputText @bind-Value="courseCardModel.Id" disabled />
+                    <ValidationMessage For="() => courseCardModel.Id" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Image Uri (optional)</label>
+                    <InputText @bind-Value="courseCardModel.ImageUri" />
+                    <ValidationMessage For="() => courseCardModel.ImageUri" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Image Header Uri (optional)</label>
+                    <InputText @bind-Value="courseCardModel.ImageHeaderUri" />
+                    <ValidationMessage For="() => courseCardModel.ImageHeaderUri" />
+                </div>
+
+
+                <div class="CourseModelBox">
+                    <label>Hours</label>
+                    <InputText @bind-Value="courseCardModel.Hours" />
+                    <ValidationMessage For="() => courseCardModel.Hours" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Title</label>
+                    <InputText @bind-Value="courseCardModel.Title" />
+                    <ValidationMessage For="() => courseCardModel.Title" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Ingress</label>
+                    <InputText @bind-Value="courseCardModel.Ingress" />
+                    <ValidationMessage For="() => courseCardModel.Ingress" />
+                </div>
+
+                <div class="CourseModelBox">
+                <label>Categories:</label>
+                <ul>
+                    @if (courseCardModel.Categories != null)
+                    {
+                        @foreach (var category in courseCardModel.Categories)
+                        {
+                            <li><input type="type" name="name" value="@category" /></li>
+                        }
+                    }
+                </ul>
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Star Rating</label>
+                    <InputNumber @bind-Value="courseCardModel.StarRating" />
+                    <ValidationMessage For="() => courseCardModel.StarRating" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Reviews</label>
+                    <InputText @bind-Value="courseCardModel.Reviews" />
+                    <ValidationMessage For="() => courseCardModel.Reviews" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Likes In Procent</label>
+                    <InputText @bind-Value="courseCardModel.LikesInProcent" />
+                    <ValidationMessage For="() => courseCardModel.LikesInProcent" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Likes</label>
+                    <InputText @bind-Value="courseCardModel.Likes" />
+                    <ValidationMessage For="() => courseCardModel.Likes" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Author</label>
+                    <InputText @bind-Value="courseCardModel.Author" />
+                    <ValidationMessage For="() => courseCardModel.Author" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Price</label>
+                    <InputText @bind-Value="courseCardModel.Price" />
+                    <ValidationMessage For="() => courseCardModel.Price" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Discount Price</label>
+                    <InputText @bind-Value="courseCardModel.DiscountPrice" />
+                    <ValidationMessage For="() => courseCardModel.DiscountPrice" />
+                </div>
+
+                <div class="CourseModelBox">
+                    <label>Currency</label>
+                    <InputText @bind-Value="courseCardModel.Currency" />
+                    <ValidationMessage For="() => courseCardModel.Currency" />
+                </div>
+
+
+                <div class="CourseModelBox">
+                    <label>Content</label>
+                    <InputTextArea @bind-Value="courseCardModel.Content" />
+                    <ValidationMessage For="() => courseCardModel.Content" />
+                </div>
+
+                <div class="signUp-checkbox">
+                    <InputCheckbox @bind-Value="courseCardModel.IsBestSeller" />
+                    <label>Is Best Seller</label>
+                </div>
+
+                <div class="signUp-checkbox">
+                    <InputCheckbox @bind-Value="courseCardModel.IsDigital" />
+                    <label>Is Digital</label>
+                </div>
+
+                <div class="signUp-checkbox">
+                    <InputCheckbox @bind-Value="DeleteCourse" />
+                    <label>Delete course</label>
+                </div>
+            }
+           
+
+            <button class="btn-theme" type="submit">Save</button>
+        </EditForm>
+    </div>
+</section>
+
+
+
+@code {
+    private string? statusMessage;
+    private bool DeleteCourse { get; set; }
+    [Parameter]
+    public string CourseId { get; set; }
+
+    [SupplyParameterFromForm(FormName = "courseCardModelForm")]
+    private CourseCardModel courseCardModel { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = new GraphQLQuery { Query = $@"query {{ getCourseById(id: ""{CourseId}"") {{ id title isBestSeller imageUri isDigital categories ingress starRating reviews likesInProcent likes hours authors {{ name }} prices {{ currency price discount }} content {{ description includes programDetails {{ id title description }} }} }} }}" };
+
+
+        var response = await Http.PostAsJsonAsync("https://courseprovider-silicon-nl.azurewebsites.net/api/graphql?code=BjXYslY76lPRzAeYp0FsiAxcYtip4Z7sX2yeweYb9nBGAzFufiglzw%3D%3D", query);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(jsonResponse);
+
+            var result = JsonSerializer.Deserialize<DynamicGraphQLResponse>(jsonResponse);
+            Console.WriteLine(result);
+
+            if (result != null && result.Data.TryGetProperty("getCourseById", out JsonElement courseElement) && courseElement.ValueKind != JsonValueKind.Undefined)
+            {
+                try
+                {
+                    Console.WriteLine(courseElement);
+                    courseCardModel = new CourseCardModel
+                        {
+                            Id = courseElement.GetProperty("id").GetString(),
+                            Title = courseElement.GetProperty("title").GetString(),
+                            IsBestSeller = courseElement.GetProperty("isBestSeller").GetBoolean(),
+                            IsDigital = courseElement.GetProperty("isDigital").GetBoolean(),
+                            ImageUri = courseElement.GetProperty("imageUri").GetString(),
+                            ImageHeaderUri = courseElement.GetProperty("imageUri").GetString(),
+                            Categories = JsonSerializer.Deserialize<string[]>(courseElement.GetProperty("categories").GetRawText()),
+                            Ingress = courseElement.GetProperty("ingress").GetString(),
+                            StarRating = courseElement.GetProperty("starRating").GetDecimal(),
+                            Reviews = courseElement.GetProperty("reviews").GetString(),
+                            LikesInProcent = courseElement.GetProperty("likesInProcent").GetString(),
+                            Likes = courseElement.GetProperty("likes").GetString(),
+                            Hours = courseElement.GetProperty("hours").GetString(),
+                            Author = courseElement.GetProperty("authors")[0].GetProperty("name").GetString(),
+                            Price = $"{courseElement.GetProperty("prices").GetProperty("currency").GetString()} {courseElement.GetProperty("prices").GetProperty("price").GetDouble()}",
+                            DiscountPrice = courseElement.GetProperty("prices").GetProperty("discount").GetDouble() > 0
+                                            ? $"{courseElement.GetProperty("prices").GetProperty("currency").GetString()} {courseElement.GetProperty("prices").GetProperty("price").GetDouble() - courseElement.GetProperty("prices").GetProperty("discount").GetDouble()}"
+                                            : null,
+                            IsVisible = true,
+                            Includes = JsonSerializer.Deserialize<string[]>(courseElement.GetProperty("content").GetProperty("includes").GetRawText()),
+
+                            Content = courseElement.GetProperty("content").GetProperty("description").GetString(),
+                            ProgramDetails = courseElement.GetProperty("content").GetProperty("programDetails")
+                                         .EnumerateArray()
+                                         .Select(detail => new ProgramDetail
+                                         {
+                                             Id = detail.GetProperty("id").GetInt32(),
+                                             Title = detail.GetProperty("title").GetString(),
+                                             Description = detail.GetProperty("description").GetString()
+                                         }).ToArray()
+
+                        };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing course: {ex.Message}");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Error: {response.StatusCode}");
+        }
+    }
+
+
+    private async Task OnValidSubmit()
+    {
+        var updateRequest = new
+        {
+            query = $@"mutation {{ updateCourse(id: ""{CourseId}"") {{ id title isBestSeller imageUri isDigital categories ingress starRating reviews likesInProcent likes hours authors {{ name }} prices {{ currency price discount }} content {{ description includes programDetails {{ id title description }} }} }} }}",
+        
+            variables = new
+            {
+                input = new
+                {
+                    id = CourseId,
+                    imageUri = courseCardModel.ImageUri,
+                    imageHeaderUri = courseCardModel.ImageHeaderUri,
+                    isBestSeller = courseCardModel.IsBestSeller,
+                    isDigital = courseCardModel.IsDigital,
+                    categories = courseCardModel.Categories,
+                    title = courseCardModel.Title,
+                    ingress = courseCardModel.Ingress,
+                    starRating = courseCardModel.StarRating,
+                    reviews = courseCardModel.Reviews,
+                    likesInProcent = courseCardModel.LikesInProcent,
+                    likes = courseCardModel.Likes,
+                    hours = courseCardModel.Hours,
+                    authors = new[]
+                    {
+                    new { name = courseCardModel.Author }
+                },
+                    prices = new
+                    {
+                        currency = courseCardModel.Currency,
+                        price = courseCardModel.Price,
+                        discount = courseCardModel.DiscountPrice
+                    },
+                    content = new
+                    {
+                        description = courseCardModel.Content,
+                        includes = courseCardModel.Includes,
+                        programDetails = courseCardModel.ProgramDetails.Select(detail => new
+                        {
+                            id = detail.Id,
+                            title = detail.Title,
+                            description = detail.Description
+                        }).ToArray()
+                    }
+                }
+            }
+        };
+
+        var response = await Http.PostAsJsonAsync("https://courseprovider-silicon-nl.azurewebsites.net/api/graphql?code=BjXYslY76lPRzAeYp0FsiAxcYtip4Z7sX2yeweYb9nBGAzFufiglzw%3D%3D", updateRequest);
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Handle success
+            statusMessage = "Course updated successfully!";
+        }
+        else
+        {
+            // Handle failure
+            statusMessage = "Failed to update course.";
+        }
+    }
+
+}

@@ -171,21 +171,25 @@
 
             if (combinedModel != null)
             {
-                if (combinedModel.FirstName == null) { combinedModel.FirstName = userProfile.FirstName; }
+                if(userProfile != null)
+                {
+                    if (combinedModel.FirstName == null) { combinedModel.FirstName = userProfile.FirstName; }
+                    if (combinedModel.LastName == null) { combinedModel.LastName = userProfile.LastName; }
+                    if (combinedModel.Email == null) { combinedModel.Email = user.Email; }
+                    if (combinedModel.Phone == null) { combinedModel.Phone = userProfile.PhoneNumber; }
+                    if (combinedModel.Biography == null) { combinedModel.Biography = userProfile.Biography; }
+                }
 
-                if (combinedModel.LastName == null) { combinedModel.LastName = userProfile.LastName; }
-                if (combinedModel.Email == null) { combinedModel.Email = user.Email; }
-                if (combinedModel.Phone == null) { combinedModel.Phone = userProfile.PhoneNumber; }
-                if (combinedModel.Biography == null) { combinedModel.Biography = userProfile.Biography; }
+                if(userAddress != null)
+                {
+                    if (combinedModel.AddressLine_1 == null) { combinedModel.AddressLine_1 = userAddress.AddressLine_1; }
+                    if (combinedModel.AddressLine_2 == null) { combinedModel.AddressLine_2 = userAddress.AddressLine_2; }
+                    if (combinedModel.PostalCode == null) { combinedModel.PostalCode = userAddress.PostalCode; }
+                    if (combinedModel.City == null) { combinedModel.City = userAddress.City; }
+                }
 
-                if (combinedModel.AddressLine_1 == null) { combinedModel.AddressLine_1 = userAddress.AddressLine_1; }
-                if (combinedModel.AddressLine_2 == null) { combinedModel.AddressLine_2 = userAddress.AddressLine_2; }
-                if (combinedModel.PostalCode == null) { combinedModel.PostalCode = userAddress.PostalCode; }
-                if (combinedModel.City == null) { combinedModel.City = userAddress.City; }
 
             }
-
-
         }
         catch (Exception ex)
         {

@@ -1,0 +1,174 @@
+﻿@page "/HandleAdministrator/{AdminId}"
+
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject ApplicationDbContext DbContext
+
+<section class="HandleAdmin">
+
+    <BlazorWebApp_Silicon.Components.Account.Shared.StatusMessage Message="@statusMessage" />
+
+    <div class="container">
+        <h3>HandleAdmin</h3>
+        <EditForm FormName="adminModelForm" Model="adminModel" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="fullname">
+                <div class="firstName">
+                    <label>First Name</label>
+                    <InputText @bind-Value="adminModel.FirstName" />
+                    <ValidationMessage For="() => adminModel.FirstName" />
+                </div>
+
+                <div class="lastName">
+                    <label>Last Name</label>
+                    <InputText @bind-Value="adminModel.LastName" />
+                    <ValidationMessage For="() => adminModel.LastName" />
+                </div>
+            </div>
+
+            <div class="email">
+                <label>Email Address</label>
+                <InputText @bind-Value="adminModel.EmailAddress" type="email" />
+                <ValidationMessage For="() => adminModel.EmailAddress" />
+            </div>
+
+            <div class="signUp-checkbox">
+                <InputCheckbox @bind-Value="adminModel.IsAdmin" />
+                <label>Admin</label>
+            </div>
+
+            <div class="signUp-checkbox">
+                <InputCheckbox @bind-Value="adminModel.IsUser" />
+                <label>User</label>
+            </div>
+
+            <div class="signUp-checkbox">
+                <InputCheckbox @bind-Value="adminModel.DeleteAdministrator" />
+                <label>Delete administrator</label>
+            </div>
+
+            <button class="btn-theme" type="submit">Save</button>
+        </EditForm>
+    </div>
+</section>
+
+@code {
+    private string? statusMessage;
+
+    [Parameter]
+    public string AdminId { get; set; }
+
+    [SupplyParameterFromForm(FormName = "adminModelForm")]
+    private AdminModel adminModel { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await UserManager.FindByIdAsync(AdminId);
+        if (user != null)
+        {
+            var userProfile = await DbContext.AspNetUserProfiles.FindAsync(user.ApplicationUserProfileId);
+
+            if (userProfile != null)
+            {
+                if (userProfile.FirstName == adminModel.FirstName || userProfile.LastName == adminModel.LastName || user.Email == adminModel.EmailAddress) ;
+                else
+                {
+                    adminModel = new AdminModel
+                        {
+                            FirstName = userProfile.FirstName,
+                            LastName = userProfile.LastName,
+                            EmailAddress = user.Email,
+                            IsAdmin = await UserManager.IsInRoleAsync(user, "Admin"),
+                            IsUser = await UserManager.IsInRoleAsync(user, "User")
+                        };
+                }
+
+            }
+        }
+    }
+    private async Task OnValidSubmit()
+    {
+        var user = await UserManager.FindByIdAsync(AdminId);
+        if (user != null)
+        {
+            if (adminModel.DeleteAdministrator)
+            {
+                var result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    statusMessage = "Administrator was deleted";
+                }
+            }
+            else
+            {
+                user.Email = adminModel.EmailAddress;
+
+                var result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    var userProfile = await DbContext.AspNetUserProfiles.FindAsync(user.ApplicationUserProfileId);
+                    if (userProfile != null)
+                    {
+                        userProfile.FirstName = adminModel.FirstName;
+                        userProfile.LastName = adminModel.LastName;
+
+                        DbContext.AspNetUserProfiles.Update(userProfile);
+                        await DbContext.SaveChangesAsync();
+
+                        statusMessage = "Administrator was updated";
+                    }
+
+                    if (adminModel.IsAdmin && !await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        await UserManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else if (!adminModel.IsAdmin && await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        await UserManager.RemoveFromRoleAsync(user, "Admin");
+                    }
+
+                    if (adminModel.IsUser && !await UserManager.IsInRoleAsync(user, "User"))
+                    {
+                        await UserManager.AddToRoleAsync(user, "User");
+                    }
+                    else if (!adminModel.IsUser && await UserManager.IsInRoleAsync(user, "User"))
+                    {
+                        await UserManager.RemoveFromRoleAsync(user, "User");
+                    }
+                }
+                else
+                {
+                    statusMessage = "Error";
+                }
+            }
+        }
+    }
+
+
+    private class AdminModel
+    {
+        [Required]
+        [Display(Name = "First name", Prompt = "Enter customer's first name")]
+        public string FirstName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Last name", Prompt = "Enter customer's last name")]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Email address", Prompt = "Enter customer's email address")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
+        public string EmailAddress { get; set; } = null!;
+
+        [Display(Name = "Admin")]
+        public bool IsAdmin { get; set; }
+
+        [Display(Name = "User")]
+        public bool IsUser { get; set; }
+
+        [Display(Name = "DeleteAdministrator")]
+        public bool DeleteAdministrator { get; set; }
+    }
+}

@@ -1,0 +1,49 @@
+﻿@page "/admin/pages/administrators"
+
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <section class="adminSection">
+            <div class="container">
+                <h3>Administrators</h3>
+                <ul class="nav nav-pills flex-column">
+
+                    @foreach (var admin in adminList)
+                    {
+                        <li class="nav-item">
+                            <NavLink class="menu-link" href="@($"/HandleAdministrator/{admin.Id}")">@admin.UserName</NavLink>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </section>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view this page.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    private List<ApplicationUser> adminList { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var adminInRole = await UserManager.GetUsersInRoleAsync("ADMIN");
+            if (adminInRole != null)
+            {
+                adminList = adminInRole.ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error processing course: {ex.Message}");
+        }
+
+    }
+}

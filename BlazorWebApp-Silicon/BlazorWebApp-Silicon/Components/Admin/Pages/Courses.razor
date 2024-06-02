@@ -1,0 +1,85 @@
+﻿@page "/admin/pages/courses"
+@using Newtonsoft.Json
+@using System.Text.Json
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <section class="adminSection">
+            <div class="container">
+                <h3>Customers</h3>
+                <ul class="nav nav-pills flex-column">
+
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="/CreateCourse">Create a new course</NavLink>
+                    </li>
+
+                    @foreach (var course in courses)
+                    {
+                        <li class="nav-item">
+                            <NavLink class="menu-link" href="@($"/HandleCourse/{course.Id}")">@course.Title</NavLink>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </section>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view this page.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private List<CourseCardModel> courses = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = new GraphQLQuery
+            {
+                Query = "{ getCourses { id title isBestSeller imageUri isDigital categories ingress starRating reviews likesInProcent likes hours authors { name } prices { currency price discount } content { description includes } } }"
+            };
+
+        var response = await Http.PostAsJsonAsync("https://courseprovider-silicon-nl.azurewebsites.net/api/graphql?code=BjXYslY76lPRzAeYp0FsiAxcYtip4Z7sX2yeweYb9nBGAzFufiglzw%3D%3D", query);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(jsonResponse);
+
+            var result = System.Text.Json.JsonSerializer.Deserialize<DynamicGraphQLResponse>(jsonResponse);
+
+            if (result != null && result.Data.TryGetProperty("getCourses", out JsonElement coursesElement) && coursesElement.ValueKind != JsonValueKind.Undefined)
+            {
+                courses = new List<CourseCardModel>();
+
+                foreach (var course in coursesElement.EnumerateArray())
+                {
+                    try
+                    {
+                        var courseId = course.GetProperty("id").GetString();
+                        var courseTitle = course.GetProperty("title").GetString();
+
+                        var courseModel = new CourseCardModel
+                            {
+                                Id = courseId,
+                                Title = courseTitle
+                            };
+
+                        courses.Add(courseModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error processing course: {ex.Message}");
+                    }
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Error: {response.StatusCode}");
+        }
+    }
+}

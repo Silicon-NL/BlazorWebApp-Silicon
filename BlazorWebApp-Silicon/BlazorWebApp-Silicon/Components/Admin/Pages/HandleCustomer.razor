@@ -1,0 +1,180 @@
+﻿@page "/HandleCustomer/{CustomerId}"
+
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+
+<section class="HandleCustomer">
+
+    <BlazorWebApp_Silicon.Components.Account.Shared.StatusMessage Message="@statusMessage" />
+
+    <div class="container">
+        <h3>HandleCustomer</h3>
+        <EditForm FormName="customerModelForm" Model="customerModel" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+
+            <div class="fullname">
+                <div class="firstName">
+                    <label>First Name</label>
+                    <InputText @bind-Value="customerModel.FirstName" />
+                    <ValidationMessage For="() => customerModel.FirstName" />
+                </div>
+
+                <div class="lastName">
+                    <label>Last Name</label>
+                    <InputText @bind-Value="customerModel.LastName" />
+                    <ValidationMessage For="() => customerModel.LastName" />
+                </div>
+            </div>
+
+            <div class="email">
+                <label>Email Address</label>
+                <InputText @bind-Value="customerModel.EmailAddress" type="email" />
+                <ValidationMessage For="() => customerModel.EmailAddress" />
+            </div>
+
+            <div class="signUp-checkbox">
+                <InputCheckbox @bind-Value="customerModel.IsAdmin" />
+                <label>Admin</label>
+            </div>
+
+            <div class="signUp-checkbox">
+                <InputCheckbox @bind-Value="customerModel.IsUser" />
+                <label>User</label>
+            </div>
+
+            <div class="signUp-checkbox">
+                <InputCheckbox @bind-Value="customerModel.DeleteCustomer" />
+                <label>Delete customer</label>
+            </div>
+
+            <button class="btn-theme" type="submit">Save</button>
+        </EditForm>
+    </div>
+</section>
+
+@code {
+
+    private string? statusMessage;
+
+    [Parameter]
+    public string CustomerId { get; set; }
+
+    [SupplyParameterFromForm(FormName = "customerModelForm")]
+    private CustomerModel customerModel { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await UserManager.FindByIdAsync(CustomerId);
+        if (user != null)
+        {
+            var userProfile = await DbContext.AspNetUserProfiles.FindAsync(user.ApplicationUserProfileId);
+
+            if (userProfile != null)
+            {
+                if (userProfile.FirstName == customerModel.FirstName || userProfile.LastName == customerModel.LastName || user.Email == customerModel.EmailAddress);
+                else
+                {
+                    customerModel = new CustomerModel
+                        {
+                            FirstName = userProfile.FirstName,
+                            LastName = userProfile.LastName,
+                            EmailAddress = user.Email,
+                            IsAdmin = await UserManager.IsInRoleAsync(user, "Admin"),
+                            IsUser = await UserManager.IsInRoleAsync(user, "User")
+                        };
+                }
+
+            }
+        }
+    }
+
+    private async Task OnValidSubmit()
+    {
+        var user = await UserManager.FindByIdAsync(CustomerId);
+        if (user != null)
+        {
+            if (customerModel.DeleteCustomer)
+            {
+                var result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    statusMessage = "Customer was deleted";
+                }
+
+            }
+            else
+            {
+                user.Email = customerModel.EmailAddress;
+
+                var result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    var userProfile = await DbContext.AspNetUserProfiles.FindAsync(user.ApplicationUserProfileId);
+                    if (userProfile != null)
+                    {
+                        userProfile.FirstName = customerModel.FirstName;
+                        userProfile.LastName = customerModel.LastName;
+
+                        DbContext.AspNetUserProfiles.Update(userProfile);
+                        await DbContext.SaveChangesAsync();
+
+                        statusMessage = "Customer was updated";
+                    }
+
+
+                    if (customerModel.IsAdmin && !await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        await UserManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else if (!customerModel.IsAdmin && await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        await UserManager.RemoveFromRoleAsync(user, "Admin");
+                    }
+
+                    if (customerModel.IsUser && !await UserManager.IsInRoleAsync(user, "User"))
+                    {
+                        await UserManager.AddToRoleAsync(user, "User");
+                    }
+                    else if (!customerModel.IsUser && await UserManager.IsInRoleAsync(user, "User"))
+                    {
+                        await UserManager.RemoveFromRoleAsync(user, "User");
+                    }                  
+                }
+                else
+                {
+                    statusMessage = "Error";
+                }
+           }         
+        }
+
+    }
+
+    private class CustomerModel
+    {
+        [Required]
+        [Display(Name = "First name", Prompt = "Enter customers first name")]
+        public string FirstName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Last name", Prompt = "Enter customers last name")]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Email address", Prompt = "Enter customers email address")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
+        public string EmailAddress { get; set; } = null!;
+
+        [Display(Name = "Admin")]
+        public bool IsAdmin { get; set; }
+
+        [Display(Name = "User")]
+        public bool IsUser { get; set; }
+
+        [Display(Name = "DeleteCustomer")]
+        public bool DeleteCustomer { get; set; }
+    }
+}

@@ -1,0 +1,32 @@
+.HandleCourse {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .CourseModelBox {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 500px;
+
+            label {
+                font-size: 20px;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            li {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

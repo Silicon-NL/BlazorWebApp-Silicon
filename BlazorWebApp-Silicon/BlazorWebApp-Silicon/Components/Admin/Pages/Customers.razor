@@ -1,0 +1,48 @@
+﻿@page "/admin/pages/customers"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <section class="adminSection">
+            <div class="container">
+                <h3>Customers</h3>
+                <ul class="nav nav-pills flex-column">
+
+                    @foreach(var customer in customerList)
+                    {
+                    <li class="nav-item">
+                            <NavLink class="menu-link" href="@($"/HandleCustomer/{customer.Id}")">@customer.UserName</NavLink>
+                    </li>
+                    }
+                    
+                </ul>
+            </div>
+        </section>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view this page.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    private List<ApplicationUser> customerList { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var usersInRole = await UserManager.GetUsersInRoleAsync("USER");
+            if (usersInRole != null)
+            {
+                customerList = usersInRole.ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error processing course: {ex.Message}");
+        }
+
+    }
+}

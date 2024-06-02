@@ -1,0 +1,132 @@
+﻿@page "/createCourse"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http
+@using System.Net.Http.Json
+
+<section class="createCourseSection">
+    <div class="container">
+        <h3>Create Course</h3>
+
+        <EditForm FormName="createCourseForm" Model="course" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div>
+                <label>Title:</label>
+                <InputText @bind-Value="course.Title" />
+            </div>
+            <div>
+                <label>Image URI:</label>
+                <InputText @bind-Value="course.ImageUri" />
+            </div>
+            <div>
+                <label>Image Header URI:</label>
+                <InputText @bind-Value="course.ImageHeaderUri" />
+            </div>
+            <div>
+                <label>Ingress:</label>
+                <InputText @bind-Value="course.Ingress" />
+            </div>
+            <div>
+                <label>Categories (comma-separated):</label>
+                <InputText @bind-Value="course.Categories" />
+            </div>
+            <div>
+                <label>Star Rating:</label>
+                <InputNumber @bind-Value="course.StarRating" />
+            </div>
+            <div>
+                <label>Reviews:</label>
+                <InputText @bind-Value="course.Reviews" />
+            </div>
+            <div>
+                <label>Likes in Percent:</label>
+                <InputText @bind-Value="course.LikesInProcent" />
+            </div>
+            <div>
+                <label>Likes:</label>
+                <InputText @bind-Value="course.Likes" />
+            </div>
+            <div>
+                <label>Hours:</label>
+                <InputText @bind-Value="course.Hours" />
+            </div>
+            <div>
+                <label>Author Name:</label>
+                <InputText @bind-Value="course.AuthorName" />
+            </div>
+            <div>
+                <label>Price:</label>
+                <InputNumber @bind-Value="course.Price" />
+            </div>
+            <div>
+                <label>Discount:</label>
+                <InputNumber @bind-Value="course.Discount" />
+            </div>
+            <div>
+                <label>Description:</label>
+                <InputTextArea @bind-Value="course.Description" />
+            </div>
+            <div>
+                <label>Includes (comma-separated):</label>
+                <InputText @bind-Value="course.Includes" />
+            </div>
+            <div>
+                <label>Program Details (JSON format):</label>
+                <InputTextArea @bind-Value="course.ProgramDetails" />
+            </div>
+
+            <button class="btn-theme" type="submit">Create Course</button>
+        </EditForm>
+    </div>
+</section>
+
+@code {
+    [SupplyParameterFromForm(FormName = "createCourseForm")]
+    private CourseCreateRequestInput course { get; set; } = new CourseCreateRequestInput();
+
+    private async Task HandleValidSubmit()
+    {
+        var input = new
+        {
+            Query = "{ CourseCreate { id title }}",
+            variables = new { input = course }
+        };
+
+        var response = await Http.PostAsJsonAsync("https://courseprovider-silicon-nl.azurewebsites.net/api/graphql?code=BjXYslY76lPRzAeYp0FsiAxcYtip4Z7sX2yeweYb9nBGAzFufiglzw%3D%3D", input);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(jsonResponse);
+        }
+        else
+        {
+            Console.WriteLine($"Error: {response.StatusCode}");
+        }
+    }
+
+    private class CourseCreateRequestInput
+    {
+        public string ImageUri { get; set; }
+        public string ImageHeaderUri { get; set; }
+        public bool IsBestSeller { get; set; } = true;
+        public bool IsDigital { get; set; } = true;
+        public string Categories { get; set; }
+        public string Title { get; set; }
+        public string Ingress { get; set; }
+        public decimal StarRating { get; set; }
+        public string Reviews { get; set; }
+        public string LikesInProcent { get; set; }
+        public string Likes { get; set; }
+        public string Hours { get; set; }
+        public string AuthorName { get; set; }
+        public double Price { get; set; }
+        public double Discount { get; set; }
+        public string Description { get; set; }
+        public string Includes { get; set; }
+        public string ProgramDetails { get; set; }
+    }
+}

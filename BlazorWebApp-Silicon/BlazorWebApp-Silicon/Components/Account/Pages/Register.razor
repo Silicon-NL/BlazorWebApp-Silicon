@@ -1,4 +1,5 @@
 ﻿@page "/Account/Register"
+@using Microsoft.EntityFrameworkCore
 @rendermode InteractiveServer
 
 <PageTitle>Sign Up</PageTitle>
@@ -102,6 +103,11 @@
                 StatusMessage = "Unable to register.";
                 return;
             }
+
+            var isFirstUser = await UserManager.Users.CountAsync() == 1;
+            var role = isFirstUser ? "Admin" : "User";
+            await UserManager.AddToRoleAsync(user, role);
+
         }
         catch (Exception ex)
         {

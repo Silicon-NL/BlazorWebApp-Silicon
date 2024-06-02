@@ -1,0 +1,34 @@
+﻿@page "/admin"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <section class="adminSection">
+            <div class="container">
+                <h1>Admin</h1>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Admin/Pages/Customers">Handle Customers</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Admin/Pages/Administrators">Handle Administrators</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Admin/Pages/Courses">Handle Courses</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="menu-link" href="Admin/Pages/Chat">Handle Chat</NavLink>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view this page.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+   
+}

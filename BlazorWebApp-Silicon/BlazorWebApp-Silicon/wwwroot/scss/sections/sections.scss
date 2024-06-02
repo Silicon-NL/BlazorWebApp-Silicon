@@ -3,10 +3,15 @@
 @import '../../../Components/Account/Pages/SavedItems.razor.scss';
 @import '../../../Components/Account/Pages/Manage/Index.razor.scss';
 @import '../../../Components/Account/Pages/LogOut.razor.scss';
+@import '../../../Components/Account/Pages/AccessDenied.razor.scss';
 @import '../../../Components/Account/Shared/ManageNavMenu.razor.scss';
 @import '../../../Components/Account/Pages/Manage/ChangePassword.razor.scss';
 @import '../../../Components/Account/Pages/Manage/Notifications.razor.scss';
 @import '../../../Components/Account/Pages/Manage/Messages.razor.scss';
+
+@import '../../../Components/Admin/Pages/HandleCourse.razor.scss';
+@import '../../../Components/Admin/Pages/CreateCourse.razor.scss';
+
 
 @import '../../../Components/Pages/Contact.razor.scss';
 @import '../../../Components/Pages/CourseDetails.razor.scss';

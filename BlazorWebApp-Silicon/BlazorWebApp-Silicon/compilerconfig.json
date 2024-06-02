@@ -106,5 +106,21 @@
   {
     "outputFile": "Components/Account/Pages/LogOut.razor.css",
     "inputFile": "Components/Account/Pages/LogOut.razor.scss"
+  },
+  {
+    "outputFile": "Components/Account/Pages/AccessDenied.razor.css",
+    "inputFile": "Components/Account/Pages/AccessDenied.razor.scss"
+  },
+  {
+    "outputFile": "Components/Admin/Admin.razor.css",
+    "inputFile": "Components/Admin/Admin.razor.scss"
+  },
+  {
+    "outputFile": "Components/Admin/Pages/HandleCourse.razor.css",
+    "inputFile": "Components/Admin/Pages/HandleCourse.razor.scss"
+  },
+  {
+    "outputFile": "Components/Admin/Pages/CreateCourse.razor.css",
+    "inputFile": "Components/Admin/Pages/CreateCourse.razor.scss"
   }
 ]
